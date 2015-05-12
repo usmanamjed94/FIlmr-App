@@ -51,7 +51,30 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     func searchAutocompleteEntriesWithSubstring (subString: String)
     {
         suggestions.removeAll(keepCapacity: false)
-        var actors = autocomplete.searchForActorsSuggestions (subString)
+        
+        let genresPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(genresPriority, 0)) {
+            var genres = self.autocomplete.searchForGenresSuggestions(subString)
+            dispatch_async(dispatch_get_main_queue()) {
+                println(genres)
+            }
+        }
+        
+        let keywordsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(keywordsPriority, 0)) {
+            var keywords = self.autocomplete.searchForKeywordsSuggestions(subString)
+            dispatch_async(dispatch_get_main_queue()) {
+                println(keywords)
+            }
+        }
+        
+        let actorsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(actorsPriority, 0)) {
+            var actors = self.autocomplete.searchForActorsSuggestions (subString)
+            dispatch_async(dispatch_get_main_queue()) {
+                println(actors)
+            }
+        }
 //        for (name, id) in actors
 //        {
 //            suggestions.append(name)
