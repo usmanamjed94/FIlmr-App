@@ -10,14 +10,14 @@ import UIKit
 
 class SuggestionsViewController: UIViewController {
 
-    var querySentence: String = ""
+    var querySentence: NSArray = []
     var tableData = []
     @IBOutlet weak var movieSuggestionsTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        searchForMovies("Hello term")
+        println(querySentence)
         
     }
 

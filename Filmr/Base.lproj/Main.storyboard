@@ -83,7 +83,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="bKL-KB-Q73" kind="show" identifier="suggestionsViewSegue" id="m6W-OR-lno"/>
+                                    <action selector="searchForRecommendations:" destination="7eN-go-qg4" eventType="touchUpInside" id="ph4-ww-och"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -109,6 +109,7 @@
                         <outlet property="autocompleteTableView" destination="iG6-uz-f2I" id="1r9-vZ-cHs"/>
                         <outlet property="sentence" destination="ny6-tQ-TF1" id="Jfj-6G-B76"/>
                         <outlet property="textField" destination="ZHM-KO-jPO" id="Vzi-wV-3uF"/>
+                        <segue destination="bKL-KB-Q73" kind="show" identifier="suggestionsViewSegue" id="qLs-qe-BP9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NCl-JC-3fJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

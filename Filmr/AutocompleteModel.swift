@@ -13,9 +13,26 @@ class AutocompleteModel {
     init (){}
     
     // Function that makes the search call for the movies
-    func searchForGenresSuggestions (searchTerm: String) -> Dictionary <String, Any>
+    func searchForMovies (searchTerm: String) -> NSArray
     {
-        var suggestionsDictionary = [String: Any]()
+        let urlPath = "http://50.19.18.196:3000/getRecommendation?era_start=1990-01-01&era_end=2010-12-30&actors=brad%20pitt&genres=Action,Adventure&keyword=fight"
+        let url = NSURL(string: urlPath)
+        var request = NSURLRequest(URL: url!)
+        var response: NSURLResponse?
+        var error: NSErrorPointer = nil
+        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: error)
+        var jsonResult = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: error) as! NSDictionary
+        
+        let results: NSArray = jsonResult["results"] as! NSArray
+        return results
+    }
+
+    
+    
+    // Function that makes the search call for generes
+    func searchForGenresSuggestions (searchTerm: String) -> Dictionary <String, Dictionary<Int, String>>
+    {
+        var suggestionsDictionary = [String: Dictionary<Int, String>]()
         let urlPath = "http://50.19.18.196:3000/autocompleteGenres?regex=" + searchTerm
         let url = NSURL(string: urlPath)
         var request = NSURLRequest(URL: url!)
@@ -42,7 +59,7 @@ class AutocompleteModel {
     
 
     
-    // Function that makes the search call for the movies
+    // Function that makes the search call keywords
     func searchForKeywordsSuggestions (searchTerm: String) -> Dictionary<String,Any>
     {
         var suggestionsDictionary = [String: Any]()
@@ -71,11 +88,11 @@ class AutocompleteModel {
     }
 
     
-    // Function that makes the search call for the movies
+    // Function that makes the search call actors
     func searchForActorsSuggestions (searchTerm: String) -> Dictionary<String, Any>
     {
         var suggestionsDictionary = [String: Any]()
-        let urlPath = "http://50.19.18.196:3000/autocompleteActors?regex=to" + searchTerm
+        let urlPath = "http://50.19.18.196:3000/autocompleteActors?regex=" + searchTerm
         let url = NSURL(string: urlPath)
 //        let session = NSURLSession.sharedSession()
 //        let task = session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in

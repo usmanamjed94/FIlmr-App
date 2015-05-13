@@ -16,7 +16,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     var pastUrls = ["Hello","Baby","Alaska", "Tom Cruise", "Tom Clancy", "Theon Greyjoy"]
     var suggestions = ["Hello","Baby","Alaska", "Tom Cruise", "Tom Clancy", "Theon Greyjoy"]
     var autocomplete = AutocompleteModel()
-    
+    var recommendations:NSArray = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,24 +57,36 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
             var genres = self.autocomplete.searchForGenresSuggestions(subString)
             dispatch_async(dispatch_get_main_queue()) {
                 println(genres)
+                for (name, details) in genres
+                {
+                    self.suggestions.append(name)
+                    self.autocompleteTableView.reloadData()
+                }
             }
         }
         
-        let keywordsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(keywordsPriority, 0)) {
-            var keywords = self.autocomplete.searchForKeywordsSuggestions(subString)
-            dispatch_async(dispatch_get_main_queue()) {
-                println(keywords)
-            }
-        }
+//        let keywordsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+//        dispatch_async(dispatch_get_global_queue(keywordsPriority, 0)) {
+//            var keywords = self.autocomplete.searchForKeywordsSuggestions(subString)
+//            dispatch_async(dispatch_get_main_queue()) {
+//                for (name,details) in keywords
+//                {
+//                    self.suggestions.append(name)
+//                }
+//            }
+//        }
+//        
+//        let actorsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+//        dispatch_async(dispatch_get_global_queue(actorsPriority, 0)) {
+//            var actors = self.autocomplete.searchForActorsSuggestions (subString)
+//            dispatch_async(dispatch_get_main_queue()) {
+//                for (name,details) in actors
+//                {
+//                    self.suggestions.append(name)
+//                }
+//            }
+//        }
         
-        let actorsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(actorsPriority, 0)) {
-            var actors = self.autocomplete.searchForActorsSuggestions (subString)
-            dispatch_async(dispatch_get_main_queue()) {
-                println(actors)
-            }
-        }
 //        for (name, id) in actors
 //        {
 //            suggestions.append(name)
@@ -90,11 +102,37 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
 //            }
 //        }
         
-        
-        autocompleteTableView.reloadData()
-        
     }
 
+    // Function that searches for movies and shows the spinner
+    @IBAction func searchForRecommendations(sender: AnyObject)
+    {
+        let subView = showActivityIndicator(self.view)
+        let recommendationsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(recommendationsPriority, 0)) {
+            self.recommendations = self.autocomplete.searchForMovies("")
+            dispatch_async(dispatch_get_main_queue())
+            {
+                if (self.recommendations.count != 0)
+                {
+                    self.performSegueWithIdentifier("suggestionsViewSegue", sender: self)
+                }
+                else
+                {
+                    let alert = UIAlertView()
+                    alert.title = "Oops!"
+                    alert.message = "We couldn't find any recommendations for you."
+                    alert.addButtonWithTitle("Take me back!")
+                    alert.show()
+                }
+                // Stopping the activity indicator and removing the subview
+                self.hideActivityIndicator(subView.container, indicator: subView.indicator)
+            }
+        }
+
+        
+        
+    }
     
     // Datasource and delegate functions of the table view
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,11 +192,56 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         UIView.commitAnimations()
     }
     
+    // Function to convert hexa code to UI Color
+    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+    }
+
+    // Function to show activity indicator
+    func showActivityIndicator(uiView: UIView) -> (indicator: UIActivityIndicatorView, container: UIView)
+    {
+        var container: UIView = UIView()
+        container.frame = uiView.frame
+        container.center = uiView.center
+        container.backgroundColor = UIColorFromHex(0xffffff, alpha: 0.3)
+        
+        var loadingView: UIView = UIView()
+        loadingView.frame = CGRectMake(0, 0, 80, 80)
+        loadingView.center = uiView.center
+        loadingView.backgroundColor = UIColorFromHex(0x444444, alpha: 0.7)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        var actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+        actInd.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+        actInd.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.WhiteLarge
+        actInd.center = CGPointMake(loadingView.frame.size.width / 2,
+            loadingView.frame.size.height / 2);
+        loadingView.addSubview(actInd)
+        container.addSubview(loadingView)
+        uiView.addSubview(container)
+        actInd.startAnimating()
+
+        return (actInd, container)
+    }
+    
+    // Function to hide activity indicator
+    func hideActivityIndicator(subView: UIView, indicator: UIActivityIndicatorView) {
+        indicator.stopAnimating()
+        subView.removeFromSuperview()
+    }
+    
+    // Sending data of movies while segue happens for sugggestions
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "suggestionsViewSegue"
         {
             if let destinationVC = segue.destinationViewController as? SuggestionsViewController {
-                destinationVC.querySentence = textField.text
+                destinationVC.querySentence = recommendations
             }
         }
     }
