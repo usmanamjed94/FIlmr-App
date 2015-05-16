@@ -9,12 +9,15 @@
 import UIKit
 
 class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource{
-
+    
+    
     @IBOutlet weak var sentence: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var autocompleteTableView: UITableView!
-    var pastUrls = ["Hello","Baby","Alaska", "Tom Cruise", "Tom Clancy", "Theon Greyjoy"]
-    var suggestions = ["Hello","Baby","Alaska", "Tom Cruise", "Tom Clancy", "Theon Greyjoy"]
+    @IBOutlet weak var getRecommendations: UIButton!
+    
+    var suggestions = [String]()
+    var suggestionsDictionary = [String: Dictionary<Int, String>]()
     var autocomplete = AutocompleteModel()
     var recommendations:NSArray = []
     final var genres = [String: Dictionary<Int, String>]()
@@ -24,11 +27,27 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         
         super.viewDidLoad()
         textField.delegate = self
+        self.view.backgroundColor = UIColorFromHex(0x191919, alpha: 1.0)
+        
+        
+        
         autocompleteTableView.delegate = self
         autocompleteTableView.dataSource = self
         autocompleteTableView.scrollEnabled = true
         autocompleteTableView.hidden = true
         autocompleteTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "AutocompleteCell")
+        autocompleteTableView.backgroundColor = UIColorFromHex(0x191919, alpha: 1.0)
+        autocompleteTableView.separatorColor = UIColorFromHex(0xffffff, alpha: 1.0)
+        autocompleteTableView.separatorInset = UIEdgeInsetsZero
+        
+        getRecommendations.backgroundColor = UIColorFromHex(0xffffff, alpha: 1.0)
+
+        getRecommendations.layer.cornerRadius = 15
+        getRecommendations.layer.borderWidth = 1
+        getRecommendations.layer.borderColor = UIColorFromHex(0x191919, alpha: 1.0).CGColor
+        
+        
+        
         sentence.numberOfLines = 0
         sentence.text = "Hello, What would you like to watch today?"
         
@@ -57,8 +76,16 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     
     // Function corresponding to writting inside the input field
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        autocompleteTableView.hidden = false
         var substring = (self.textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        if (substring != "")
+        {
+            autocompleteTableView.hidden = false
+        }
+        else
+        {
+            autocompleteTableView.hidden = true
+        }
+        
         searchAutocompleteEntriesWithSubstring(substring)
         return true
         
@@ -68,12 +95,17 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     func searchAutocompleteEntriesWithSubstring (subString: String)
     {
         suggestions.removeAll(keepCapacity: false)
+        suggestionsDictionary.removeAll(keepCapacity: false)
         
         for (name,details) in genres
         {
             if name.uppercaseString.hasPrefix(subString.uppercaseString)
             {
                 suggestions.append(name)
+                for (id, type) in details
+                {
+                    suggestionsDictionary[name] = [id:type]
+                }
             }
         }
         
@@ -83,20 +115,39 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
             if name.uppercaseString.hasPrefix(subString.uppercaseString)
             {
                 suggestions.append(name)
+                for (id, type) in details
+                {
+                    suggestionsDictionary[name] = [id:type]
+                }
             }
         }
+        
+        // Shuffling suggestions
+        if (suggestions.count > 2)
+        {
+            suggestions = shuffle(suggestions as [String])
+        }
+        
         
         
         let actorsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(actorsPriority, 0)) {
             self.actors = self.autocomplete.searchForActorsSuggestions(subString)
             dispatch_async(dispatch_get_main_queue()) {
-                println(self.actors)
                 for (name,details) in self.actors
                 {
                     self.suggestions.append(name)
-                    self.autocompleteTableView.reloadData()
+                    for (id, type) in details
+                    {
+                        self.suggestionsDictionary[name] = [id:type]
+                    }
                 }
+                
+                if (self.suggestions.count>2)
+                {
+                    self.suggestions = self.shuffle(self.suggestions as [String])
+                }
+                self.autocompleteTableView.reloadData()
             }
         }
         
@@ -141,7 +192,28 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("AutocompleteCell", forIndexPath: indexPath) as! UITableViewCell
+        
+        //let dictionaryObject = suggestionsDictionary[indexPath.row]
+        
         cell.textLabel!.text = suggestions[indexPath.row]
+        cell.textLabel!.textColor = UIColorFromHex(0xffffff, alpha: 1.0)
+        cell.textLabel!.font = UIFont.boldSystemFontOfSize(16.0)
+        
+        let details = suggestionsDictionary[suggestions[indexPath.row]]!
+        for (id, type) in details
+        {
+            switch type {
+                case "Actor":
+                    cell.backgroundColor = UIColorFromHex(0xcf2424, alpha: 1.0)
+                case "Keyword":
+                    cell.backgroundColor = UIColorFromHex(0xdd7625, alpha: 1.0)
+                case "Genre":
+                    cell.backgroundColor = UIColorFromHex(0x4c1242, alpha: 1.0)
+                default:
+                    println("default")
+            }
+        }
+        
         return cell
     }
     
@@ -157,12 +229,12 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     // Function corresponding to focus state of input field
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        animateViewMoving(true, moveValue: 250)
+        animateViewMoving(true, moveValue: 220)
     }
     
     // When the focus ends ; moving the view back in
     func textFieldDidEndEditing(textField: UITextField) {
-        animateViewMoving(false, moveValue: 250)
+        animateViewMoving(false, moveValue: 220)
         
         // Fade out to set the text
         
@@ -246,4 +318,16 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         }
     }
     
+    // Shuffling funtion
+    func shuffle<C: MutableCollectionType where C.Index.Distance == Int>(var list: C) -> C {
+        var n = count(list)
+        if n == 0 { return list }
+        let oneBeforeEnd = advance(list.startIndex, n.predecessor())
+        for i in list.startIndex..<oneBeforeEnd {
+            let ran = Int(arc4random_uniform(UInt32(n--)))
+            let j = advance(i,ran)
+            swap(&list[i], &list[j])
+        }
+        return list
+    }
 }
