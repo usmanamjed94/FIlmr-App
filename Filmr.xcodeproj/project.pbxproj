@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9918902D1B074E3A001937B0 /* placeholder small.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9918902C1B074E3A001937B0 /* placeholder small.gif */; };
+		9918902F1B074E4C001937B0 /* placeholder wide.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9918902E1B074E4C001937B0 /* placeholder wide.gif */; };
 		9919CD451B0260B600AAEEA1 /* AutocompleteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919CD441B0260B600AAEEA1 /* AutocompleteModel.swift */; };
+		9935B5131B04C681005343D9 /* singleMovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9935B5121B04C681005343D9 /* singleMovieCell.xib */; };
+		9935B5151B04C97B005343D9 /* SingleMovieCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9935B5141B04C97B005343D9 /* SingleMovieCellClass.swift */; };
+		997E02C51B0631D7006B7157 /* DoubleMovieCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997E02C41B0631D7006B7157 /* DoubleMovieCellClass.swift */; };
 		998A838B1B012AD70038F751 /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A838A1B012AD70038F751 /* SuggestionsViewController.swift */; };
 		99AE23131AFFAB3100C700D5 /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AE23121AFFAB3100C700D5 /* QueryViewController.swift */; };
 		99D717F51AF41F1100DF3D62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D717F41AF41F1100DF3D62 /* AppDelegate.swift */; };
@@ -16,6 +21,7 @@
 		99D717FC1AF41F1100DF3D62 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99D717FB1AF41F1100DF3D62 /* Images.xcassets */; };
 		99D717FF1AF41F1100DF3D62 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D717FD1AF41F1100DF3D62 /* LaunchScreen.xib */; };
 		99D7180B1AF41F1100DF3D62 /* FilmrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D7180A1AF41F1100DF3D62 /* FilmrTests.swift */; };
+		99E394FF1B04F9D9009D76AD /* doubleMovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99E394FE1B04F9D9009D76AD /* doubleMovieCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +35,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9918902C1B074E3A001937B0 /* placeholder small.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "placeholder small.gif"; sourceTree = "<group>"; };
+		9918902E1B074E4C001937B0 /* placeholder wide.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "placeholder wide.gif"; sourceTree = "<group>"; };
 		9919CD441B0260B600AAEEA1 /* AutocompleteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteModel.swift; sourceTree = "<group>"; };
+		9935B5121B04C681005343D9 /* singleMovieCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = singleMovieCell.xib; sourceTree = "<group>"; };
+		9935B5141B04C97B005343D9 /* SingleMovieCellClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleMovieCellClass.swift; sourceTree = "<group>"; };
+		997E02C41B0631D7006B7157 /* DoubleMovieCellClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleMovieCellClass.swift; sourceTree = "<group>"; };
 		998A838A1B012AD70038F751 /* SuggestionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuggestionsViewController.swift; path = ../SuggestionsViewController.swift; sourceTree = "<group>"; };
 		99AE23121AFFAB3100C700D5 /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
 		99D717EF1AF41F1100DF3D62 /* Filmr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filmr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +53,7 @@
 		99D718041AF41F1100DF3D62 /* FilmrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FilmrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D718091AF41F1100DF3D62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99D7180A1AF41F1100DF3D62 /* FilmrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmrTests.swift; sourceTree = "<group>"; };
+		99E394FE1B04F9D9009D76AD /* doubleMovieCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = doubleMovieCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +95,8 @@
 		99D717F11AF41F1100DF3D62 /* Filmr */ = {
 			isa = PBXGroup;
 			children = (
+				9918902E1B074E4C001937B0 /* placeholder wide.gif */,
+				9918902C1B074E3A001937B0 /* placeholder small.gif */,
 				998A838A1B012AD70038F751 /* SuggestionsViewController.swift */,
 				99D717F41AF41F1100DF3D62 /* AppDelegate.swift */,
 				99D717F61AF41F1100DF3D62 /* WelcomeViewController.swift */,
@@ -92,6 +106,10 @@
 				99D717FD1AF41F1100DF3D62 /* LaunchScreen.xib */,
 				99D717F21AF41F1100DF3D62 /* Supporting Files */,
 				9919CD441B0260B600AAEEA1 /* AutocompleteModel.swift */,
+				9935B5121B04C681005343D9 /* singleMovieCell.xib */,
+				997E02C41B0631D7006B7157 /* DoubleMovieCellClass.swift */,
+				9935B5141B04C97B005343D9 /* SingleMovieCellClass.swift */,
+				99E394FE1B04F9D9009D76AD /* doubleMovieCell.xib */,
 			);
 			path = Filmr;
 			sourceTree = "<group>";
@@ -203,6 +221,10 @@
 			files = (
 				99D717FA1AF41F1100DF3D62 /* Main.storyboard in Resources */,
 				99D717FF1AF41F1100DF3D62 /* LaunchScreen.xib in Resources */,
+				99E394FF1B04F9D9009D76AD /* doubleMovieCell.xib in Resources */,
+				9918902D1B074E3A001937B0 /* placeholder small.gif in Resources */,
+				9918902F1B074E4C001937B0 /* placeholder wide.gif in Resources */,
+				9935B5131B04C681005343D9 /* singleMovieCell.xib in Resources */,
 				99D717FC1AF41F1100DF3D62 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,9 +245,11 @@
 			files = (
 				9919CD451B0260B600AAEEA1 /* AutocompleteModel.swift in Sources */,
 				998A838B1B012AD70038F751 /* SuggestionsViewController.swift in Sources */,
+				997E02C51B0631D7006B7157 /* DoubleMovieCellClass.swift in Sources */,
 				99D717F71AF41F1100DF3D62 /* WelcomeViewController.swift in Sources */,
 				99AE23131AFFAB3100C700D5 /* QueryViewController.swift in Sources */,
 				99D717F51AF41F1100DF3D62 /* AppDelegate.swift in Sources */,
+				9935B5151B04C97B005343D9 /* SingleMovieCellClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,10 +17,12 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     var suggestions = ["Hello","Baby","Alaska", "Tom Cruise", "Tom Clancy", "Theon Greyjoy"]
     var autocomplete = AutocompleteModel()
     var recommendations:NSArray = []
-    
+    final var genres = [String: Dictionary<Int, String>]()
+    final var keywords = [String: Dictionary<Int, String>]()
+    final var actors = [String: Dictionary<Int, String>]()
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        self.navigationController?.navigationBar.hidden = true
         textField.delegate = self
         autocompleteTableView.delegate = self
         autocompleteTableView.dataSource = self
@@ -29,7 +31,22 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         autocompleteTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "AutocompleteCell")
         sentence.numberOfLines = 0
         sentence.text = "Hello, What would you like to watch today?"
-
+        
+        // Adding data from the server for genres and keywords locally so that none other call is made.
+        let subView = showActivityIndicator(self.view)
+        
+        let genresPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(genresPriority, 0)) {
+            self.genres = self.autocomplete.searchForGenresSuggestions("")
+        }
+        
+        let keywordsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(keywordsPriority, 0)) {
+            self.keywords = self.autocomplete.searchForKeywordsSuggestions("")
+            dispatch_async(dispatch_get_main_queue()) {
+                self.hideActivityIndicator(subView.container, indicator: subView.indicator)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,12 +69,30 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     {
         suggestions.removeAll(keepCapacity: false)
         
-        let genresPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(genresPriority, 0)) {
-            var genres = self.autocomplete.searchForGenresSuggestions(subString)
+        for (name,details) in genres
+        {
+            if name.uppercaseString.hasPrefix(subString.uppercaseString)
+            {
+                suggestions.append(name)
+            }
+        }
+        
+        
+        for (name,details) in keywords
+        {
+            if name.uppercaseString.hasPrefix(subString.uppercaseString)
+            {
+                suggestions.append(name)
+            }
+        }
+        
+        
+        let actorsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(actorsPriority, 0)) {
+            self.actors = self.autocomplete.searchForActorsSuggestions(subString)
             dispatch_async(dispatch_get_main_queue()) {
-                println(genres)
-                for (name, details) in genres
+                println(self.actors)
+                for (name,details) in self.actors
                 {
                     self.suggestions.append(name)
                     self.autocompleteTableView.reloadData()
@@ -65,42 +100,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
             }
         }
         
-//        let keywordsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-//        dispatch_async(dispatch_get_global_queue(keywordsPriority, 0)) {
-//            var keywords = self.autocomplete.searchForKeywordsSuggestions(subString)
-//            dispatch_async(dispatch_get_main_queue()) {
-//                for (name,details) in keywords
-//                {
-//                    self.suggestions.append(name)
-//                }
-//            }
-//        }
-//        
-//        let actorsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-//        dispatch_async(dispatch_get_global_queue(actorsPriority, 0)) {
-//            var actors = self.autocomplete.searchForActorsSuggestions (subString)
-//            dispatch_async(dispatch_get_main_queue()) {
-//                for (name,details) in actors
-//                {
-//                    self.suggestions.append(name)
-//                }
-//            }
-//        }
-        
-//        for (name, id) in actors
-//        {
-//            suggestions.append(name)
-//        }
-        
-        
-//        for suggestionString in pastUrls
-//        {
-//            println(suggestionString)
-//            if suggestionString.uppercaseString.hasPrefix(subString.uppercaseString)
-//            {
-//                suggestions.append(suggestionString)
-//            }
-//        }
+        self.autocompleteTableView.reloadData()
         
     }
 
@@ -241,7 +241,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         if segue.identifier == "suggestionsViewSegue"
         {
             if let destinationVC = segue.destinationViewController as? SuggestionsViewController {
-                destinationVC.querySentence = recommendations
+                destinationVC.suggestionsData = recommendations
             }
         }
     }
