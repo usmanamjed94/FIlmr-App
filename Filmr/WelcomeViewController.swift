@@ -27,8 +27,13 @@ class WelcomeViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Navigation bar color
         self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x181818, alpha: 1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+  
+        // Main background
+//        self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+
         
         
         welcomeFirstLabel = UILabel()
