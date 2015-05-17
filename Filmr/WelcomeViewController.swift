@@ -12,9 +12,13 @@ class WelcomeViewController: UIViewController {
 
     var welcomeFirstLabel: UILabel!
     var welcomeSecondLabel: UILabel!
-    
+    final var genres = [String: Dictionary<Int, String>]()
+    final var keywords = [String: Dictionary<Int, String>]()
+    var autocomplete = AutocompleteModel()
     
     override func viewWillAppear(animated: Bool) {
+        genres.removeAll(keepCapacity: false)
+        keywords.removeAll(keepCapacity: false)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +27,9 @@ class WelcomeViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x101010, alpha: 1.0)
+        self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x181818, alpha: 1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
         
         welcomeFirstLabel = UILabel()
         welcomeFirstLabel.text = "Welcome to"
@@ -47,10 +52,28 @@ class WelcomeViewController: UIViewController {
         
         UIView.animateWithDuration(2.0, delay: 0.8, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, options: nil, animations: {self.welcomeSecondLabel.center = CGPoint(x: 200, y: 90+200); self.welcomeSecondLabel.alpha = 1}, completion: {
             (finished: Bool) -> Void in
-            self.welcomeFirstLabel.alpha = 0
-            self.welcomeSecondLabel.alpha = 0
-            self.performSegueWithIdentifier("queryViewSegue", sender: self)
+            
+            
+            // Adding data from the server for genres and keywords locally so that none other call is made.
+            let subView = self.showActivityIndicator(self.view)
+            
+            let genresPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+            dispatch_async(dispatch_get_global_queue(genresPriority, 0)) {
+                self.genres = self.autocomplete.searchForGenresSuggestions("")
+            }
+            
+            let keywordsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+            dispatch_async(dispatch_get_global_queue(keywordsPriority, 0)) {
+                self.keywords = self.autocomplete.searchForKeywordsSuggestions("")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.hideActivityIndicator(subView.container, indicator: subView.indicator)
+                    self.performSegueWithIdentifier("queryViewSegue", sender: self)
+                }
+            }
+            
         })
+        
+        
 
     }
 
@@ -58,6 +81,52 @@ class WelcomeViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // Sending data of movies while segue happens for sugggestions
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "queryViewSegue"
+        {
+            if let destinationVC = segue.destinationViewController as? QueryViewController {
+                destinationVC.genres = genres
+                destinationVC.keywords = keywords
+            }
+        }
+    }
+    
+    // Function to show activity indicator
+    func showActivityIndicator(uiView: UIView) -> (indicator: UIActivityIndicatorView, container: UIView)
+    {
+        var container: UIView = UIView()
+        container.frame = uiView.frame
+        container.center = uiView.center
+        
+        var loadingView: UIView = UIView()
+        loadingView.frame = CGRectMake(0, 0, 80, 80)
+        loadingView.center = uiView.center
+        loadingView.backgroundColor = UIColorFromHex(0x444444, alpha: 0.7)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        var actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+        actInd.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+        actInd.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.WhiteLarge
+        actInd.center = CGPointMake(loadingView.frame.size.width / 2,
+            loadingView.frame.size.height / 2);
+        loadingView.addSubview(actInd)
+        container.addSubview(loadingView)
+        uiView.addSubview(container)
+        actInd.startAnimating()
+        
+        return (actInd, container)
+    }
+    
+    // Function to hide activity indicator
+    func hideActivityIndicator(subView: UIView, indicator: UIActivityIndicatorView) {
+        indicator.stopAnimating()
+        subView.removeFromSuperview()
+    }
+    
     
     // Function to convert hexa code to UI Color
     func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {

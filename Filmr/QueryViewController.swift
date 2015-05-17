@@ -16,6 +16,12 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     @IBOutlet weak var autocompleteTableView: UITableView!
     @IBOutlet weak var getRecommendations: UIButton!
     
+    var myMutableSentence = NSMutableAttributedString()
+    var attributesPositions = [String: [Int:Int]]()
+    
+    var timer:NSTimer?
+    var myCounter = 0
+    
     var suggestions = [String]()
     var suggestionsDictionary = [String: Dictionary<Int, String>]()
     var autocomplete = AutocompleteModel()
@@ -23,12 +29,51 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     final var genres = [String: Dictionary<Int, String>]()
     final var keywords = [String: Dictionary<Int, String>]()
     final var actors = [String: Dictionary<Int, String>]()
+    final var constraintsDictionary = [String: Dictionary<Int, String>]()
+    
+    // Function corresponding to any appearence of the view
+    override func viewWillAppear(animated: Bool) {
+        textField.text = ""
+        constraintsDictionary.removeAll(keepCapacity: false)
+        suggestionsDictionary.removeAll(keepCapacity: false)
+        attributesPositions.removeAll(keepCapacity: false)
+        
+        sentence.text = "I WANT TO WATCH A MOVIE CONTAINING KEYWORD STARRING ACTOR FROM THE ERA INVOLVING GENRE?"
+        
+        myMutableSentence = NSMutableAttributedString(string: sentence.text!)
+        
+        // Keyword Coloring
+        myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xdd7625, alpha: 1.0), range: NSRange(location: 35,length: 7))
+        myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
+        // Actor Coloring
+        myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xcf2424, alpha: 1.0), range: NSRange(location: 52,length: 5))
+        myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
+        // ERA Coloring
+        myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xcf2424, alpha: 1.0), range: NSRange(location: 67,length: 3))
+        myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
+        // Genre Coloring
+        myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: 81,length: 5))
+        myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
+        
+        
+        sentence.attributedText = myMutableSentence
+
+
+    }
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        textField.delegate = self
-        self.view.backgroundColor = UIColorFromHex(0x191919, alpha: 1.0)
         
+        
+        textField.delegate = self
+        self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        sentence.textColor = UIColorFromHex(0x565454, alpha: 1.0)
+        
+        
+        sentence.textColor = UIColorFromHex(0xffffff, alpha: 1.0)
+        sentence.font = UIFont.boldSystemFontOfSize(24.0)
         
         
         autocompleteTableView.delegate = self
@@ -36,36 +81,15 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         autocompleteTableView.scrollEnabled = true
         autocompleteTableView.hidden = true
         autocompleteTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "AutocompleteCell")
-        autocompleteTableView.backgroundColor = UIColorFromHex(0x191919, alpha: 1.0)
+        autocompleteTableView.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
         autocompleteTableView.separatorColor = UIColorFromHex(0xffffff, alpha: 1.0)
-        autocompleteTableView.separatorInset = UIEdgeInsetsZero
+        autocompleteTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
         getRecommendations.backgroundColor = UIColorFromHex(0xffffff, alpha: 1.0)
-
         getRecommendations.layer.cornerRadius = 15
         getRecommendations.layer.borderWidth = 1
         getRecommendations.layer.borderColor = UIColorFromHex(0x191919, alpha: 1.0).CGColor
         
-        
-        
-        sentence.numberOfLines = 0
-        sentence.text = "Hello, What would you like to watch today?"
-        
-        // Adding data from the server for genres and keywords locally so that none other call is made.
-        let subView = showActivityIndicator(self.view)
-        
-        let genresPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(genresPriority, 0)) {
-            self.genres = self.autocomplete.searchForGenresSuggestions("")
-        }
-        
-        let keywordsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(keywordsPriority, 0)) {
-            self.keywords = self.autocomplete.searchForKeywordsSuggestions("")
-            dispatch_async(dispatch_get_main_queue()) {
-                self.hideActivityIndicator(subView.container, indicator: subView.indicator)
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -221,6 +245,15 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         let selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         textField.text = selectedCell.textLabel!.text
         textField.resignFirstResponder()
+        let details = suggestionsDictionary[textField.text]!
+        
+        for (id, type) in details
+        {
+            constraintsDictionary[textField.text] = [id:type]
+        }
+        textField.text = ""
+        
+        animateSentence(sentence)
         autocompleteTableView.hidden = true
         
     }
@@ -236,21 +269,6 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     func textFieldDidEndEditing(textField: UITextField) {
         animateViewMoving(false, moveValue: 220)
         
-        // Fade out to set the text
-        
-        UIView.animateWithDuration(1.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            self.sentence.alpha = 0.0
-            }, completion: {
-                (finished: Bool) -> Void in
-                
-                //Once the label is completely invisible, set the text and fade it back in
-                self.sentence.text = "I want to watch a movie starring tom cruise"
-                
-                // Fade in
-                UIView.animateWithDuration(1.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                    self.sentence.alpha = 1.0
-                    }, completion: nil)
-        })
     }
     
     // Animate function for moving views upwards
@@ -279,7 +297,6 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         var container: UIView = UIView()
         container.frame = uiView.frame
         container.center = uiView.center
-        container.backgroundColor = UIColorFromHex(0xffffff, alpha: 0.3)
         
         var loadingView: UIView = UIView()
         loadingView.frame = CGRectMake(0, 0, 80, 80)
@@ -318,7 +335,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         }
     }
     
-    // Shuffling funtion
+    // Shuffling funtion for an array
     func shuffle<C: MutableCollectionType where C.Index.Distance == Int>(var list: C) -> C {
         var n = count(list)
         if n == 0 { return list }
@@ -330,4 +347,215 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         }
         return list
     }
+    
+    
+    
+    
+    
+    // Function that builds the sentence
+    func buildSentence (constraints: Dictionary<String, Dictionary<Int, String>>) -> String
+    {
+        println(constraints)
+        var startSentence = "I WANT TO WATCH A "
+        var firstEntry: Bool = true
+        var totalLengthBefore = 0
+        var lengthOfEntry = 0
+        
+        totalLengthBefore = count(startSentence)
+        
+        // Checking for genre
+        for (name, details) in constraints
+        {
+            for (id, type) in details
+            {
+                if (type == "Genre")
+                {
+                    if (firstEntry)
+                    {
+                        startSentence = startSentence + name.uppercaseString + " "
+                        firstEntry = false
+                        lengthOfEntry += count(name)
+                    }
+                        
+                    else
+                    {
+                        lengthOfEntry += 3 + count(name)
+                        startSentence = startSentence + ", " + name.uppercaseString + " "
+                    }
+                }
+            }
+        }
+        
+        
+        startSentence += "MOVIE "
+        firstEntry = true
+        attributesPositions["Genre"] = [totalLengthBefore: lengthOfEntry]
+        totalLengthBefore = count(startSentence)
+        lengthOfEntry = 0
+        
+        // Checking for era
+        for (name, details) in constraints
+        {
+            for (id, type) in details
+            {
+                if (type == "Era")
+                {
+                    if (firstEntry)
+                    {
+                        startSentence = startSentence + "FROM THE ERA OF " + name.uppercaseString + " "
+                        totalLengthBefore += 16
+                        firstEntry = false
+                        lengthOfEntry += count(name)
+                    }
+                        
+                    else
+                    {
+                        startSentence = startSentence + ", " + name.uppercaseString + " "
+                        lengthOfEntry += 3 + count(name)
+                    }
+                }
+            }
+        }
+        
+        firstEntry = true
+        attributesPositions["Era"] = [totalLengthBefore: lengthOfEntry]
+        totalLengthBefore = count(startSentence)
+        lengthOfEntry = 0
+        
+        // Checking for actors
+        for (name, details) in constraints
+        {
+            for (id, type) in details
+            {
+                if (type == "Actor")
+                {
+                    if (firstEntry)
+                    {
+                        startSentence = startSentence + "STARRING " + name.uppercaseString + " "
+                        totalLengthBefore += 9
+                        firstEntry = false
+                        lengthOfEntry += count(name)
+                    }
+                        
+                    else
+                    {
+                        startSentence = startSentence + ", " + name.uppercaseString + " "
+                        lengthOfEntry += 3 + count(name)
+                    }
+                }
+            }
+        }
+        firstEntry = true
+        attributesPositions["Actor"] = [totalLengthBefore: lengthOfEntry]
+        totalLengthBefore = count(startSentence)
+        lengthOfEntry = 0
+        
+        // Checking for keywords
+        for (name, details) in constraints
+        {
+            for (id, type) in details
+            {
+                if (type == "Keyword")
+                {
+                    if (firstEntry)
+                    {
+                        startSentence = startSentence + "INVOLVING " + name.uppercaseString + " "
+                        totalLengthBefore += 10
+                        firstEntry = false
+                        lengthOfEntry += count(name)
+                    }
+                    
+                    else
+                    {
+                        startSentence = startSentence + ", " + name.uppercaseString + " "
+                        lengthOfEntry += 3 + count(name)
+                    }
+                }
+            }
+        }
+        attributesPositions["Keyword"] = [totalLengthBefore: lengthOfEntry]
+        println(attributesPositions)
+        println(startSentence)
+        return startSentence
+    }
+    
+    
+    // Function that color codes given sentence based on the ranges provided
+    func colorCodeSentence (positions: Dictionary<String, Dictionary<Int, Int>>, sentence: String) -> NSMutableAttributedString
+    {
+        var myMutableSentence = NSMutableAttributedString(string: sentence)
+        
+        for (type, details) in positions
+        {
+            if (type == "Keyword")
+            {
+                for (start,end) in details
+                {
+                    // Keyword Coloring
+                    myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xdd7625, alpha: 1.0), range: NSRange(location: start,length: end))
+                    myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: start,length: end))
+
+                }
+            }
+            
+            else if (type == "Actor")
+            {
+                for (start,end) in details
+                {
+                    // Actor Coloring
+                    myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xcf2424, alpha: 1.0), range: NSRange(location: start,length: end))
+                    myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: start,length: end))
+
+                }
+            }
+            
+            if (type == "Genre")
+            {
+                for (start,end) in details
+                {
+                    // Genre Coloring
+                    myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: start,length: end))
+                    myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: start,length: end))
+
+                }
+            }
+            
+            if (type == "Era")
+            {
+                for (start,end) in details
+                {
+                    // ERA Coloring
+                    myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xcf2424, alpha: 1.0), range: NSRange(location: start,length: end))
+                    myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: start,length: end))
+                }
+            }
+            
+        }
+     
+        return myMutableSentence
+    }
+    
+    // Animating the sentence. Sentence is first built; then colorcoded; and then animated into view
+    
+    func animateSentence (sentence: UILabel)
+    {
+        // Fade out to set the text
+        
+        UIView.animateWithDuration(1.25, delay: 0.0, options: UIViewAnimationOptions.TransitionCurlUp, animations: {
+            self.sentence.alpha = 0.0
+            }, completion: {
+                (finished: Bool) -> Void in
+                
+                //Once the label is completely invisible, set the text and fade it back in
+                self.sentence.text = self.buildSentence(self.constraintsDictionary)
+                self.sentence.attributedText = self.colorCodeSentence(self.attributesPositions, sentence: self.sentence.text!)
+                
+                // Fade in
+                UIView.animateWithDuration(1.25, delay: 0.0, options: UIViewAnimationOptions.TransitionCurlDown, animations: {
+                    self.sentence.alpha = 1.0
+                    }, completion: nil)
+        })
+
+    }
+    
 }

@@ -41,21 +41,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What do feel like watching today?" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZHM-KO-jPO">
-                                <rect key="frame" x="16" y="319" width="222" height="30"/>
+                                <rect key="frame" x="16" y="319" width="232" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="uN8-3C-ncJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ny6-tQ-TF1">
-                                <rect key="frame" x="27" y="136" width="322" height="72"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iG6-uz-f2I">
-                                <rect key="frame" x="16" y="362" width="333" height="267"/>
+                                <rect key="frame" x="16" y="362" width="343" height="267"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AutocompleteCell" textLabel="IgB-VK-4r9" style="IBUITableViewCellStyleDefault" id="hUt-iq-MpW">
@@ -78,31 +72,44 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rNx-lC-qg3">
-                                <rect key="frame" x="246" y="319" width="103" height="30"/>
+                                <rect key="frame" x="256" y="319" width="103" height="30"/>
                                 <state key="normal" title="Lets Go!">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="searchForRecommendations:" destination="7eN-go-qg4" eventType="touchUpInside" id="ph4-ww-och"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="clip" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ny6-tQ-TF1">
+                                <rect key="frame" x="16" y="81" width="343" height="230"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Hello this is a large sentence meant to check the ui label properties">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="20" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="15"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4O1-Cq-HeV" firstAttribute="top" secondItem="iG6-uz-f2I" secondAttribute="bottom" constant="38" id="23T-Bs-Gtd"/>
-                            <constraint firstItem="ZHM-KO-jPO" firstAttribute="top" secondItem="ny6-tQ-TF1" secondAttribute="bottom" constant="111" id="3sc-Ok-Oa0"/>
+                            <constraint firstItem="ZHM-KO-jPO" firstAttribute="top" secondItem="ny6-tQ-TF1" secondAttribute="bottom" constant="8" id="3sc-Ok-Oa0"/>
                             <constraint firstItem="ZHM-KO-jPO" firstAttribute="leading" secondItem="JAJ-RV-YxB" secondAttribute="leadingMargin" id="45v-Br-Zs3"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="rNx-lC-qg3" secondAttribute="trailing" constant="10" id="B9v-zz-3qn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rNx-lC-qg3" secondAttribute="trailing" id="B9v-zz-3qn"/>
                             <constraint firstItem="ZHM-KO-jPO" firstAttribute="centerY" secondItem="JAJ-RV-YxB" secondAttribute="centerY" id="Cbi-WN-OSa"/>
                             <constraint firstItem="rNx-lC-qg3" firstAttribute="leading" secondItem="ZHM-KO-jPO" secondAttribute="trailing" constant="8" id="WrL-cQ-VBj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iG6-uz-f2I" secondAttribute="trailing" constant="10" id="XFk-SG-mLj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ny6-tQ-TF1" secondAttribute="trailing" constant="10" id="YhM-hL-O0h"/>
-                            <constraint firstItem="ny6-tQ-TF1" firstAttribute="leading" secondItem="JAJ-RV-YxB" secondAttribute="leadingMargin" constant="11" id="bpS-Vu-nC2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iG6-uz-f2I" secondAttribute="trailing" id="XFk-SG-mLj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ny6-tQ-TF1" secondAttribute="trailing" id="YhM-hL-O0h"/>
+                            <constraint firstItem="ny6-tQ-TF1" firstAttribute="leading" secondItem="JAJ-RV-YxB" secondAttribute="leadingMargin" id="bpS-Vu-nC2"/>
                             <constraint firstItem="iG6-uz-f2I" firstAttribute="top" secondItem="rNx-lC-qg3" secondAttribute="bottom" constant="13" id="dcQ-1Z-m35"/>
-                            <constraint firstItem="ny6-tQ-TF1" firstAttribute="top" secondItem="9Lo-AF-elT" secondAttribute="bottom" constant="72" id="i5I-3F-r8l"/>
+                            <constraint firstItem="ny6-tQ-TF1" firstAttribute="top" secondItem="9Lo-AF-elT" secondAttribute="bottom" constant="17" id="i5I-3F-r8l"/>
                             <constraint firstItem="iG6-uz-f2I" firstAttribute="leading" secondItem="JAJ-RV-YxB" secondAttribute="leadingMargin" id="iE1-yJ-M6e"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ZHM-KO-jPO" secondAttribute="trailing" constant="121" id="pL0-q4-e93"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZHM-KO-jPO" secondAttribute="trailing" constant="111" id="pL0-q4-e93"/>
                             <constraint firstItem="iG6-uz-f2I" firstAttribute="top" secondItem="ZHM-KO-jPO" secondAttribute="bottom" constant="13" id="pYR-Aj-hak"/>
                         </constraints>
                     </view>

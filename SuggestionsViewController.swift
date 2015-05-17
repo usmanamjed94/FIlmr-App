@@ -223,7 +223,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        return 268
+        return 288
     }
     
     
