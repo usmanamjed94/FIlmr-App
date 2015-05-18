@@ -10,13 +10,18 @@ import UIKit
 
 class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate {
 
+<<<<<<< HEAD
     var suggestionsData :NSArray = []
     var tempMoviesData :NSMutableArray = []
     var FBUserMovies: NSArray = []
+=======
+    var suggestionsData = []
+>>>>>>> master
     var tableData = []
     var imageCache = [String:UIImage]()
     @IBOutlet weak var movieSuggestionsTableView: UITableView!
 
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -222,6 +227,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         {
             var cell: DoubleMovieCellClass = self.movieSuggestionsTableView.dequeueReusableCellWithIdentifier("doubleMovieCell") as! DoubleMovieCellClass
             
+            
             var row = (indexPath.row * 2) - 2
             
             if let rowData: NSDictionary = self.suggestionsData[row] as? NSDictionary
@@ -234,6 +240,13 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
                 // Start by setting the cell's image to a static file
                 cell.leftMoviePoster.image = UIImage(named: "placeholderSmall.gif")
                 cell.leftMovieID.text = id
+                
+                cell.leftMoviePoster.userInteractionEnabled = true
+                cell.leftMoviePoster.tag = id.toInt()!
+                var tappedLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "TappedOnLeftImage:")
+                tappedLeft.numberOfTapsRequired = 1
+                cell.leftMoviePoster.addGestureRecognizer(tappedLeft)
+                
                 
                 if let img = imageCache[urlString]
                 {
@@ -268,48 +281,68 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
                 
             }
             
-            if let rowData: NSDictionary = self.suggestionsData[row+1] as? NSDictionary
+            if ((row+1) < self.suggestionsData.count)
             {
-                let urlString = "http://image.tmdb.org/t/p/w342/" + (rowData["poster_path"]! as! String)
-                let imgURL = NSURL(string: urlString)
-                let temp = rowData["id"]!
-                let id = "\(temp)"
-                let title = rowData ["original_title"] as! String
+                if let rowData: NSDictionary = self.suggestionsData[row+1] as? NSDictionary
+                {
+                    
+                    let urlString = "http://image.tmdb.org/t/p/w342/" + (rowData["poster_path"]! as! String)
+                    let imgURL = NSURL(string: urlString)
+                    let temp = rowData["id"]!
+                    let id = "\(temp)"
+                    let title = rowData ["original_title"] as! String
+                    
+                    // Start by setting the cell's image to a static file
+                    cell.rightMoviePoster.image = UIImage(named: "placeholderSmall.gif")
+                    cell.rightMovieID.text = id
+                    
+                    // Adding gesture which recognizes image tap on the right image
+                    cell.rightMoviePoster.userInteractionEnabled = true
+                    cell.rightMoviePoster.tag = id.toInt()!
+                    var tappedRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "TappedOnRightImage:")
+                    tappedRight.numberOfTapsRequired = 1
+                    cell.rightMoviePoster.addGestureRecognizer(tappedRight)
+                    
+                    
+                    
+                    if let img = imageCache[urlString]
+                    {
+                        cell.rightMoviePoster.image = img
+                    }
+                        
+                    else
+                    {
+                        // The image isn't cached, download the img data
+                        // Performing this in the background thread
+                        let request: NSURLRequest = NSURLRequest(URL: imgURL!)
+                        let mainQueue = NSOperationQueue.mainQueue()
+                        NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+                            if error == nil {
+                                // Convert the downloaded data in to a UIImage object
+                                let image = UIImage(data: data)
+                                // Store the image in to our cache
+                                self.imageCache[urlString] = image
+                                // Update the cell
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? DoubleMovieCellClass {
+                                        cellToUpdate.rightMoviePoster.image = image
+                                    }
+                                })
+                            }
+                            else {
+                                println("Error: \(error.localizedDescription)")
+                            }
+                        })
+                        
+                    }
+                }
                 
-                // Start by setting the cell's image to a static file
+            }
+            
+            else
+            {
                 cell.rightMoviePoster.image = UIImage(named: "placeholderSmall.gif")
-                cell.rightMovieID.text = id
-                
-                if let img = imageCache[urlString]
-                {
-                    cell.rightMoviePoster.image = img
-                }
-                    
-                else
-                {
-                    // The image isn't cached, download the img data
-                    // Performing this in the background thread
-                    let request: NSURLRequest = NSURLRequest(URL: imgURL!)
-                    let mainQueue = NSOperationQueue.mainQueue()
-                    NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
-                        if error == nil {
-                            // Convert the downloaded data in to a UIImage object
-                            let image = UIImage(data: data)
-                            // Store the image in to our cache
-                            self.imageCache[urlString] = image
-                            // Update the cell
-                            dispatch_async(dispatch_get_main_queue(), {
-                                if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? DoubleMovieCellClass {
-                                    cellToUpdate.rightMoviePoster.image = image
-                                }
-                            })
-                        }
-                        else {
-                            println("Error: \(error.localizedDescription)")
-                        }
-                    })
-                    
-                }
+                cell.rightMovieID.text = ""
             }
             
             return cell
@@ -322,11 +355,10 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         return 288
     }
     
-    
-    
-    // Function that makes the search call for the movies
-    func searchForMovies (searchTerm: String)
+    // Corresponding to selection of cell
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+<<<<<<< HEAD
         let urlPath = "http://localhost:3000/getRecommendation?era_start=1990-01-01&era_end=2010-12-30&actors=brad%20pitt&genres=Action,Adventure&keyword=fight"
         let url = NSURL(string: urlPath)
         let session = NSURLSession.sharedSession();
@@ -349,10 +381,28 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         })
+=======
+        if ((indexPath.row == 0) || (indexPath.row == 1))
+        {
+            let selectedCell: SingleMovieCellClass = self.movieSuggestionsTableView.cellForRowAtIndexPath(indexPath) as! SingleMovieCellClass
+            let movieId = selectedCell.movieId.text!
+            println(movieId)
+        }
+>>>>>>> master
         
-        task.resume()
     }
-
+    
+    // Function corresponding to left image tap gesture
+    func TappedOnLeftImage(sender:UITapGestureRecognizer){
+        println((sender.view?.tag)!)
+    }
+    
+    func TappedOnRightImage(sender:UITapGestureRecognizer){
+        println((sender.view?.tag)!)
+    }
+    
+    
+    
     /*
     // MARK: - Navigation
 

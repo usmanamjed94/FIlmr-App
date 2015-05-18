@@ -24,16 +24,23 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     
     var suggestions = [String]()
     var suggestionsDictionary = [String: Dictionary<Int, String>]()
-    var autocomplete = AutocompleteModel()
+    var query = QueryModel()
     var recommendations:NSArray = []
     final var genres = [String: Dictionary<Int, String>]()
     final var keywords = [String: Dictionary<Int, String>]()
     final var actors = [String: Dictionary<Int, String>]()
+    
+    // Initializing era's
+    var era = ["1950's":[195001019591230: "Era"],"1960's":[196001019691230: "Era"],"1970's":[197001019791230: "Era"],"1980's":[198001019891230: "Era"],"1990's":[199001019991230: "Era"],"2000's":[200001020151230: "Era"]]
+    
     final var constraintsDictionary = [String: Dictionary<Int, String>]()
+    
+    
     
     // Function corresponding to any appearence of the view
     override func viewWillAppear(animated: Bool) {
         textField.text = ""
+        recommendations = []
         constraintsDictionary.removeAll(keepCapacity: false)
         suggestionsDictionary.removeAll(keepCapacity: false)
         attributesPositions.removeAll(keepCapacity: false)
@@ -49,16 +56,14 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xcf2424, alpha: 1.0), range: NSRange(location: 52,length: 5))
         myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
         // ERA Coloring
-        myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xcf2424, alpha: 1.0), range: NSRange(location: 67,length: 3))
+        myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: 67,length: 3))
         myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
         // Genre Coloring
         myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: 81,length: 5))
         myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
         
-        
         sentence.attributedText = myMutableSentence
-
-
+        
     }
     
     
@@ -146,6 +151,18 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
             }
         }
         
+        for (name,details) in era
+        {
+            if name.uppercaseString.hasPrefix(subString.uppercaseString)
+            {
+                suggestions.append(name)
+                for (id, type) in details
+                {
+                    suggestionsDictionary[name] = [id:type]
+                }
+            }
+        }
+        
         // Shuffling suggestions
         if (suggestions.count > 2)
         {
@@ -156,7 +173,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         
         let actorsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(actorsPriority, 0)) {
-            self.actors = self.autocomplete.searchForActorsSuggestions(subString)
+            self.actors = self.query.searchForActorsSuggestions(subString)
             dispatch_async(dispatch_get_main_queue()) {
                 for (name,details) in self.actors
                 {
@@ -182,10 +199,11 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     // Function that searches for movies and shows the spinner
     @IBAction func searchForRecommendations(sender: AnyObject)
     {
+        
         let subView = showActivityIndicator(self.view)
         let recommendationsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(recommendationsPriority, 0)) {
-            self.recommendations = self.autocomplete.searchForMovies("")
+            self.recommendations = self.query.searchForMovies(self.queryBuilder(self.constraintsDictionary))
             dispatch_async(dispatch_get_main_queue())
             {
                 if (self.recommendations.count != 0)
@@ -233,6 +251,8 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
                     cell.backgroundColor = UIColorFromHex(0xdd7625, alpha: 1.0)
                 case "Genre":
                     cell.backgroundColor = UIColorFromHex(0x4c1242, alpha: 1.0)
+                case "Era":
+                    cell.backgroundColor = UIColorFromHex(0x8d1a33, alpha: 1.0)
                 default:
                     println("default")
             }
@@ -330,7 +350,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         if segue.identifier == "suggestionsViewSegue"
         {
             if let destinationVC = segue.destinationViewController as? SuggestionsViewController {
-                destinationVC.suggestionsData = recommendations
+                destinationVC.suggestionsData = recommendations as Array
             }
         }
     }
@@ -355,7 +375,6 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     // Function that builds the sentence
     func buildSentence (constraints: Dictionary<String, Dictionary<Int, String>>) -> String
     {
-        println(constraints)
         var startSentence = "I WANT TO WATCH A "
         var firstEntry: Bool = true
         var totalLengthBefore = 0
@@ -474,8 +493,6 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
             }
         }
         attributesPositions["Keyword"] = [totalLengthBefore: lengthOfEntry]
-        println(attributesPositions)
-        println(startSentence)
         return startSentence
     }
     
@@ -525,7 +542,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
                 for (start,end) in details
                 {
                     // ERA Coloring
-                    myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0xcf2424, alpha: 1.0), range: NSRange(location: start,length: end))
+                    myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: start,length: end))
                     myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: start,length: end))
                 }
             }
@@ -555,6 +572,155 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
                     self.sentence.alpha = 1.0
                     }, completion: nil)
         })
+
+    }
+    
+    // Function that builds the query for recommendations
+    func queryBuilder (constraints: Dictionary<String, Dictionary<Int, String>>) -> String
+    {
+        var initialQuery = "http://50.19.18.196:3000/fetchRecommendation?"
+        var firstEntry = true
+        var completeEraString = ""
+        var startEra:NSMutableString = ""
+        var endEra:NSMutableString = ""
+        
+        
+        initialQuery += "era_start=&era_end="
+        
+        // Checking for era and building era constraints
+        for (name, details) in constraints
+        {
+            for (id, type) in details
+            {
+                if (type == "Era")
+                {
+                    completeEraString = "\(id)"
+                    startEra = NSMutableString(string: completeEraString.substringToIndex(advance(completeEraString.startIndex,8)))
+                    endEra = NSMutableString(string: completeEraString.substringFromIndex(advance(completeEraString.startIndex,7)))
+                    
+                    
+                    if (firstEntry)
+                    {
+                        startEra.insertString("-", atIndex: 4)
+                        startEra.insertString("-", atIndex: 7)
+                        endEra.insertString("-", atIndex: 4)
+                        endEra.insertString("-", atIndex: 7)
+                        initialQuery = initialQuery.substringToIndex(advance(initialQuery.startIndex,45))
+                        initialQuery += "era_start=" + (startEra as String) + "&" + "era_end=" + (endEra as String)
+                        firstEntry = false
+                    }
+                        
+                    else
+                    {
+                        var nextStart = startEra as String
+                        var nextEnd = endEra as String
+                        nextStart.stringByReplacingOccurrencesOfString("-", withString: "", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
+                        nextEnd.stringByReplacingOccurrencesOfString("-", withString: "", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
+                        
+                        var nextStartInt = nextStart.toInt()
+                        var nextEndInt = nextEnd.toInt()
+                        
+                        var prevStart = initialQuery.substringWithRange(Range(start:advance(initialQuery.startIndex,55),end: advance(initialQuery.startIndex, 65)))
+                        var prevEnd = initialQuery.substringWithRange(Range(start:advance(initialQuery.startIndex,74),end: advance(initialQuery.startIndex, 84)))
+                        
+                        var prevStartInt = prevStart.toInt()
+                        var prevEndInt = prevEnd.toInt()
+
+                        startEra.insertString("-", atIndex: 4)
+                        startEra.insertString("-", atIndex: 7)
+                        endEra.insertString("-", atIndex: 4)
+                        endEra.insertString("-", atIndex: 7)
+                        
+                        
+                        if (prevStart > nextStart)
+                        {
+                            initialQuery.replaceRange(Range(start:advance(initialQuery.startIndex,55),end: advance(initialQuery.startIndex, 65)), with: (startEra as String))
+                        }
+                        
+                        if (prevEnd < nextEnd)
+                        {
+                            initialQuery.replaceRange(Range(start:advance(initialQuery.startIndex,74),end: advance(initialQuery.startIndex, 84)), with: (endEra as String))
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
+        initialQuery += "&actors="
+        firstEntry = true
+        
+        // Checking for actors
+        for (name, details) in constraints
+        {
+            for (id, type) in details
+            {
+                if (type == "Actor")
+                {
+                    if (firstEntry)
+                    {
+                        initialQuery += "\(id)"
+                        firstEntry = false
+                    }
+                    
+                    else
+                    {
+                        initialQuery += ",\(id)"
+                    }
+                }
+            }
+        }
+        
+        initialQuery += "&genres="
+        firstEntry = true
+        
+        // Checking for genres
+        for (name, details) in constraints
+        {
+            for (id, type) in details
+            {
+                if (type == "Genre")
+                {
+                    if (firstEntry)
+                    {
+                        initialQuery += "\(id)"
+                        firstEntry = false
+                    }
+                        
+                    else
+                    {
+                        initialQuery += "|\(id)"
+                    }
+                }
+            }
+        }
+        
+        initialQuery += "&keywords="
+        firstEntry = true
+        
+        // Checking for keywords
+        for (name, details) in constraints
+        {
+            for (id, type) in details
+            {
+                if (type == "Keyword")
+                {
+                    if (firstEntry)
+                    {
+                        initialQuery += "\(id)"
+                        firstEntry = false
+                    }
+                        
+                    else
+                    {
+                        initialQuery += ",\(id)"
+                    }
+                }
+            }
+        }
+        
+        println(initialQuery)
+        return initialQuery
 
     }
     

@@ -16,7 +16,7 @@ class WelcomeViewController: UIViewController {
     var welcomeSecondLabel: UIImage!
     final var genres = [String: Dictionary<Int, String>]()
     final var keywords = [String: Dictionary<Int, String>]()
-    var autocomplete = AutocompleteModel()
+    var query = QueryModel()
     
     override func viewWillAppear(animated: Bool) {
         genres.removeAll(keepCapacity: false)
@@ -70,12 +70,12 @@ class WelcomeViewController: UIViewController {
             
             let genresPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             dispatch_async(dispatch_get_global_queue(genresPriority, 0)) {
-                self.genres = self.autocomplete.searchForGenresSuggestions("")
+                self.genres = self.query.searchForGenresSuggestions("")
             }
             
             let keywordsPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             dispatch_async(dispatch_get_global_queue(keywordsPriority, 0)) {
-                self.keywords = self.autocomplete.searchForKeywordsSuggestions("")
+                self.keywords = self.query.searchForKeywordsSuggestions("")
                 dispatch_async(dispatch_get_main_queue()) {
                     self.hideActivityIndicator(subView.container, indicator: subView.indicator)
                     self.performSegueWithIdentifier("queryViewSegue", sender: self)
