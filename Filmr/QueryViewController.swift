@@ -40,6 +40,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     // Function corresponding to any appearence of the view
     override func viewWillAppear(animated: Bool) {
         textField.text = ""
+        recommendations = []
         constraintsDictionary.removeAll(keepCapacity: false)
         suggestionsDictionary.removeAll(keepCapacity: false)
         attributesPositions.removeAll(keepCapacity: false)
@@ -62,6 +63,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
         
         sentence.attributedText = myMutableSentence
+        
     }
     
     
@@ -348,7 +350,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         if segue.identifier == "suggestionsViewSegue"
         {
             if let destinationVC = segue.destinationViewController as? SuggestionsViewController {
-                destinationVC.suggestionsData = recommendations
+                destinationVC.suggestionsData = recommendations as Array
             }
         }
     }
@@ -373,7 +375,6 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     // Function that builds the sentence
     func buildSentence (constraints: Dictionary<String, Dictionary<Int, String>>) -> String
     {
-        println(constraints)
         var startSentence = "I WANT TO WATCH A "
         var firstEntry: Bool = true
         var totalLengthBefore = 0
@@ -492,8 +493,6 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
             }
         }
         attributesPositions["Keyword"] = [totalLengthBefore: lengthOfEntry]
-        println(attributesPositions)
-        println(startSentence)
         return startSentence
     }
     
@@ -648,7 +647,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
             }
         }
         
-        initialQuery += "&actor="
+        initialQuery += "&actors="
         firstEntry = true
         
         // Checking for actors
@@ -720,6 +719,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
             }
         }
         
+        println(initialQuery)
         return initialQuery
 
     }
