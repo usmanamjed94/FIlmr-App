@@ -8,15 +8,15 @@
 
 import Foundation
 
-class AutocompleteModel {
+class QueryModel {
     
     init (){}
     
     // Function that makes the search call for the movies
     func searchForMovies (searchTerm: String) -> NSArray
     {
-//        http://50.19.18.196:3000/getRecommendation?era_start=1990-01-01&era_end=2010-12-30&actors=brad%20pitt&genres=Action,Adventure&keyword=fight
-        let urlPath = "http://50.19.18.196:3000/getRecommendation?era_start=1990-01-01&era_end=2010-12-30&actors=brad%20pitt"
+
+        let urlPath = searchTerm
         let url = NSURL(string: urlPath)
         var request = NSURLRequest(URL: url!)
         var response: NSURLResponse?
