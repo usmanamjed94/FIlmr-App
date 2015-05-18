@@ -10,13 +10,10 @@ import UIKit
 
 class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate {
 
-<<<<<<< HEAD
     var suggestionsData :NSArray = []
     var tempMoviesData :NSMutableArray = []
     var FBUserMovies: NSArray = []
-=======
-    var suggestionsData = []
->>>>>>> master
+
     var tableData = []
     var imageCache = [String:UIImage]()
     @IBOutlet weak var movieSuggestionsTableView: UITableView!
@@ -36,7 +33,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.navigationController?.navigationBar.addSubview(loginView)
 //            self.view.addSubview(loginView)
 //            loginView.center = self.navigationController?.navigationBar.center
-            loginView.frame = (frame: CGRect(x: 250, y: 0, width: 90, height: 40))
+            loginView.frame = (frame: CGRect(x: 280, y: 10, width: 90, height: 30))
 //            loginView.center = self.view.center
             loginView.readPermissions = ["public_profile", "email", "user_friends"]
 //            self.navigationController.de
@@ -358,37 +355,14 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     // Corresponding to selection of cell
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-<<<<<<< HEAD
-        let urlPath = "http://localhost:3000/getRecommendation?era_start=1990-01-01&era_end=2010-12-30&actors=brad%20pitt&genres=Action,Adventure&keyword=fight"
-        let url = NSURL(string: urlPath)
-        let session = NSURLSession.sharedSession();
-        let task = session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in
-            println("The api call was made.")
-            if(error != nil) {
-                // If there is an error in the web request, print it to the console
-                println(error.localizedDescription)
-            }
-            var err: NSError?
-            if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as? NSDictionary {
-                if(err != nil) {
-                    // If there is an error parsing JSON, print it to the console
-                    println("JSON Error \(err!.localizedDescription)")
-                }
-                if let results: NSArray = jsonResult["results"] as? NSArray {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        println(results)
-                    })
-                }
-            }
-        })
-=======
+
         if ((indexPath.row == 0) || (indexPath.row == 1))
         {
             let selectedCell: SingleMovieCellClass = self.movieSuggestionsTableView.cellForRowAtIndexPath(indexPath) as! SingleMovieCellClass
             let movieId = selectedCell.movieId.text!
             println(movieId)
         }
->>>>>>> master
+
         
     }
     
