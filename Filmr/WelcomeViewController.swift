@@ -10,8 +10,10 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
 
-    var welcomeFirstLabel: UILabel!
-    var welcomeSecondLabel: UILabel!
+//    var welcomeFirstLabel: UILabel!
+//    var welcomeSecondLabel: UILabel!
+    var welcomeFirstLabel: UIImage!
+    var welcomeSecondLabel: UIImage!
     final var genres = [String: Dictionary<Int, String>]()
     final var keywords = [String: Dictionary<Int, String>]()
     var autocomplete = AutocompleteModel()
@@ -28,34 +30,38 @@ class WelcomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // Navigation bar color
-        self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x181818, alpha: 1.0)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x101010, alpha: 0.5)
+        self.navigationController?.navigationBar.tintColor = UIColor.lightTextColor()
   
         // Main background
-//        self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
 
         
         
-        welcomeFirstLabel = UILabel()
-        welcomeFirstLabel.text = "Welcome to"
-        welcomeFirstLabel.font = UIFont.systemFontOfSize(36)
-        welcomeFirstLabel.sizeToFit()
-        welcomeFirstLabel.center = CGPoint (x: 150, y: 40)
-        view.addSubview(welcomeFirstLabel)
-        welcomeFirstLabel.alpha = 0
+        welcomeFirstLabel = UIImage(named:"logo1")
+//        welcomeFirstLabel.text = "Welcome to"
+//        welcomeFirstLabel.font = UIFont.systemFontOfSize(36)
+//        welcomeFirstLabel.
+        var imageview = UIImageView(image: welcomeFirstLabel)
+        imageview.frame = (frame: CGRect(x: 140, y: 100, width: 150, height: 80))
+//        imageview.center = CGPoint (x: 150, y: 40)
+        view.addSubview(imageview)
+        imageview.alpha = 0
         
-        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: nil, animations:{self.welcomeFirstLabel.center = CGPoint(x: 150, y: 40+200); self.welcomeFirstLabel.alpha = 1}, completion: nil)
+        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: nil, animations:{imageview.center = CGPoint(x: 140, y: 100+200); imageview.alpha = 1}, completion: nil)
         
         
-        welcomeSecondLabel = UILabel()
-        welcomeSecondLabel.text = "Filmr!"
-        welcomeSecondLabel.font = UIFont.boldSystemFontOfSize(48)
-        welcomeSecondLabel.sizeToFit()
-        welcomeSecondLabel.center = CGPoint (x: 200, y: 90)
-        view.addSubview(welcomeSecondLabel)
-        welcomeSecondLabel.alpha = 0
+        welcomeSecondLabel = UIImage(named:"logo2")
+////        welcomeSecondLabel.text = "Filmr!"
+//        welcomeSecondLabel.font = UIFont.boldSystemFontOfSize(48)
+//        welcomeSecondLabel.sizeToFit()
+        var imageview1 = UIImageView(image: welcomeSecondLabel)
+        imageview1.frame = (frame: CGRect(x: 270, y:80, width: 150, height: 140))
+//        imageview1.center = CGPoint (x: 200, y: 90)
+        view.addSubview(imageview1)
+        imageview1.alpha = 0
         
-        UIView.animateWithDuration(2.0, delay: 0.8, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, options: nil, animations: {self.welcomeSecondLabel.center = CGPoint(x: 200, y: 90+200); self.welcomeSecondLabel.alpha = 1}, completion: {
+        UIView.animateWithDuration(2.0, delay: 0.8, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, options: nil, animations: {imageview1.center = CGPoint(x: 270, y: 80+200); imageview1.alpha = 1}, completion: {
             (finished: Bool) -> Void in
             
             

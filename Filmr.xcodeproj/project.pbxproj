@@ -84,9 +84,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0451B05D1B0A788800F7B5A8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		99D717E61AF41F1000DF3D62 = {
 			isa = PBXGroup;
 			children = (
+				0451B05D1B0A788800F7B5A8 /* Resources */,
 				04E8616C1B091F3300E3E835 /* Bolts.framework */,
 				04E8616D1B091F3300E3E835 /* FBSDKLoginKit.framework */,
 				04E8616B1B091AF800E3E835 /* Bridging-Header.h */,
