@@ -11,6 +11,7 @@ import UIKit
 class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate {
 
     var suggestionsData: NSArray = []
+    var FBUserMovies: NSArray = []
     var tableData = []
     var imageCache = [String:UIImage]()
     @IBOutlet weak var movieSuggestionsTableView: UITableView!
@@ -18,13 +19,13 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if (FBSDKAccessToken.currentAccessToken() != nil)
-        {
-            // User is already logged in, do work such as go to next view controller.
-        }
-        else
-        {
+//        
+//        if (FBSDKAccessToken.currentAccessToken() != nil)
+//        {
+//            // User is already logged in, do work such as go to next view controller.
+//        }
+//        else
+//        {
             let loginView : FBSDKLoginButton = FBSDKLoginButton()
             self.navigationController?.navigationBar.addSubview(loginView)
 //            self.view.addSubview(loginView)
@@ -35,7 +36,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
 //            self.navigationController.de
 //            loginView.delegate = self.navigationController?.delegate
             loginView.delegate = self
-        }
+//        }
         
         movieSuggestionsTableView.contentInset = UIEdgeInsetsZero
         movieSuggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -54,6 +55,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         println("User Logged In")
+        self.returnUserData()
         
         if ((error) != nil)
         {
@@ -78,7 +80,9 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func returnUserData()
     {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+        var params = [String:Int]()
+        params["limit"] = 200
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/movies", parameters: params)
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
             if ((error) != nil)
@@ -88,11 +92,18 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
             else
             {
-                println("fetched user: \(result)")
-                let userName : NSString = result.valueForKey("name") as! NSString
-                println("User Name is: \(userName)")
-                let userEmail : NSString = result.valueForKey("email") as! NSString
-                println("User Email is: \(userEmail)")
+//                println("fetched user: \(result)")
+                self.FBUserMovies = result.valueForKey("data") as! NSArray
+                println(self.FBUserMovies[0])
+                for movie in self.FBUserMovies {
+                    println(movie.valueForKey("name") as! NSString)
+                }
+//                print(self.FBUserMovies[0].valueForKey("name") as! NSString)
+//                print(self.FBUserMovies[0].name as NSString)
+//                let userName : NSString = result.valueForKey("name") as! NSString
+//                println("User Name is: \(userName)")
+//                let userEmail : NSString = result.valueForKey("email") as! NSString
+//                println("User Email is: \(userEmail)")
             }
         })
     }
