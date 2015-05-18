@@ -10,7 +10,8 @@ import UIKit
 
 class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate {
 
-    var suggestionsData: NSArray = []
+    var suggestionsData :NSArray = []
+    var tempMoviesData :NSMutableArray = []
     var FBUserMovies: NSArray = []
     var tableData = []
     var imageCache = [String:UIImage]()
@@ -30,7 +31,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.navigationController?.navigationBar.addSubview(loginView)
 //            self.view.addSubview(loginView)
 //            loginView.center = self.navigationController?.navigationBar.center
-            loginView.frame = (frame: CGRect(x: 200, y: 0, width: 90, height: 40))
+            loginView.frame = (frame: CGRect(x: 250, y: 0, width: 90, height: 40))
 //            loginView.center = self.view.center
             loginView.readPermissions = ["public_profile", "email", "user_friends"]
 //            self.navigationController.de
@@ -55,7 +56,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         println("User Logged In")
-        self.returnUserData()
+        
         
         if ((error) != nil)
         {
@@ -72,6 +73,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
                 // Do work
             }
         }
+        self.returnUserData()
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
@@ -95,18 +97,37 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
 //                println("fetched user: \(result)")
                 self.FBUserMovies = result.valueForKey("data") as! NSArray
                 println(self.FBUserMovies[0])
-                for movie in self.FBUserMovies {
-                    println(movie.valueForKey("name") as! NSString)
+                self.tempMoviesData = self.suggestionsData.mutableCopy() as! NSMutableArray
+                for (index, suggestedMovie) in enumerate(self.tempMoviesData){
+                    let rowData: NSDictionary = suggestedMovie as! NSDictionary
+                    let suggestedMovieName = rowData ["original_title"] as! String
+                    for movie in self.FBUserMovies {
+                        let movieName = movie.valueForKey("name") as! String
+                        if(movieName==suggestedMovieName){
+                            self.tempMoviesData.removeObjectAtIndex(index)
+                           println(suggestedMovieName ," ", index)
+                            continue
+                        }
+                        
+                    }
+                    
                 }
-//                print(self.FBUserMovies[0].valueForKey("name") as! NSString)
-//                print(self.FBUserMovies[0].name as NSString)
-//                let userName : NSString = result.valueForKey("name") as! NSString
-//                println("User Name is: \(userName)")
-//                let userEmail : NSString = result.valueForKey("email") as! NSString
-//                println("User Email is: \(userEmail)")
+                self.suggestionsData = self.tempMoviesData
+                // Do any additional setup after loading the view.
+                var nib1 = UINib(nibName: "singleMovieCell", bundle: nil)
+                self.movieSuggestionsTableView.registerNib(nib1, forCellReuseIdentifier: "singleMovieCell")
+                
+                var nib2 = UINib(nibName: "doubleMovieCell", bundle: nil)
+                self.movieSuggestionsTableView.registerNib(nib2, forCellReuseIdentifier: "doubleMovieCell")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.movieSuggestionsTableView.reloadData()
+                })
+//                self.performSegueWithIdentifier("suggestionsViewSegue", sender: self)
             }
         })
+        
     }
+    
 
 
     override func didReceiveMemoryWarning() {
@@ -306,7 +327,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     // Function that makes the search call for the movies
     func searchForMovies (searchTerm: String)
     {
-        let urlPath = "http://50.19.18.196:3000/getRecommendation?era_start=1990-01-01&era_end=2010-12-30&actors=brad%20pitt&genres=Action,Adventure&keyword=fight"
+        let urlPath = "http://localhost:3000/getRecommendation?era_start=1990-01-01&era_end=2010-12-30&actors=brad%20pitt&genres=Action,Adventure&keyword=fight"
         let url = NSURL(string: urlPath)
         let session = NSURLSession.sharedSession();
         let task = session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in
