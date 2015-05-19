@@ -14,6 +14,7 @@ class WelcomeViewController: UIViewController {
     var welcomeSecondLabel: UILabel!
     final var genres = [String: Dictionary<Int, String>]()
     final var keywords = [String: Dictionary<Int, String>]()
+    var popularRecommendations: NSArray = []
     var query = QueryModel()
     
     override func viewWillAppear(animated: Bool) {
@@ -56,6 +57,7 @@ class WelcomeViewController: UIViewController {
             
             // Adding data from the server for genres and keywords locally so that none other call is made.
             let subView = self.showActivityIndicator(self.view)
+            
             
             let genresPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             dispatch_async(dispatch_get_global_queue(genresPriority, 0)) {
