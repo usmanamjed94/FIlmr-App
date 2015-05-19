@@ -140,19 +140,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KEW-vh-KQq">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="612"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="DFW-IF-rTt"/>
                                     <constraint firstAttribute="width" constant="375" id="Qdq-Ay-Uh6"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="504" id="YNl-LT-Yhy"/>
-                                    <constraint firstAttribute="height" constant="667" id="wA0-wq-x6A"/>
+                                    <constraint firstAttribute="height" constant="612" id="wA0-wq-x6A"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="VZ7-Hb-veb" id="TqR-8U-vb0"/>
                                     <outlet property="delegate" destination="VZ7-Hb-veb" id="uoi-vV-mDq"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" alpha="0.74999999999999978" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jX3-So-A9L">
+                                <rect key="frame" x="0.0" y="614" width="375" height="53"/>
+                                <color key="backgroundColor" red="1" green="0.40579571310000001" blue="0.1015954367" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Personalize Recommendations">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" title="disabled"/>
+                                <connections>
+                                    <action selector="personalizeRecommendations:" destination="VZ7-Hb-veb" eventType="touchUpInside" id="8mc-Fu-72L"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -161,6 +173,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="UtX-Xh-e5Y"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="640"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="movieSuggestionsTableView" destination="KEW-vh-KQq" id="EQ5-lQ-HEU"/>
@@ -168,7 +181,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yMf-BU-NID" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1563.5" y="28.5"/>
+            <point key="canvasLocation" x="1557.5" y="2.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Pzf-tD-8jI">

@@ -13,33 +13,28 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     var suggestionsData :NSArray = []
     var tempMoviesData :NSMutableArray = []
     var FBUserMovies: NSArray = []
+     var loginView : FBSDKLoginButton = FBSDKLoginButton()
 
     var tableData = []
     var imageCache = [String:UIImage]()
     @IBOutlet weak var movieSuggestionsTableView: UITableView!
 
     
+    @IBAction func personalizeRecommendations(sender: AnyObject) {
+        loginView.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        
-//        if (FBSDKAccessToken.currentAccessToken() != nil)
-//        {
-//            // User is already logged in, do work such as go to next view controller.
-//        }
-//        else
-//        {
-            let loginView : FBSDKLoginButton = FBSDKLoginButton()
-            self.navigationController?.navigationBar.addSubview(loginView)
-//            self.view.addSubview(loginView)
-//            loginView.center = self.navigationController?.navigationBar.center
+
             loginView.frame = (frame: CGRect(x: 280, y: 10, width: 90, height: 30))
-//            loginView.center = self.view.center
+
             loginView.readPermissions = ["public_profile", "email", "user_friends"]
-//            self.navigationController.de
-//            loginView.delegate = self.navigationController?.delegate
             loginView.delegate = self
-//        }
+        if (FBSDKAccessToken.currentAccessToken() != nil)
+                {
+                    self.returnUserData()
+                }
         
         movieSuggestionsTableView.contentInset = UIEdgeInsetsZero
         movieSuggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
