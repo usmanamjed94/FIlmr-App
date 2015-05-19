@@ -80,6 +80,8 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         println("User Logged Out")
+        let loginManager = FBSDKLoginManager()
+        loginManager.logOut() // this is an instance function
     }
     
     func returnUserData()
