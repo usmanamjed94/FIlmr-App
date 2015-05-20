@@ -7,25 +7,38 @@
 //
 
 import UIKit
-import MediaPlayer
 
-class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate {
 
-    var suggestionsData = []
+    var suggestionsData :NSArray = []
+    var tempMoviesData :NSMutableArray = []
+    var FBUserMovies: NSArray = []
+     var loginView : FBSDKLoginButton = FBSDKLoginButton()
+
     var tableData = []
     var imageCache = [String:UIImage]()
-    var query = QueryModel()
-    var movieDetails:NSArray = []
-    
-    
     @IBOutlet weak var movieSuggestionsTableView: UITableView!
 
+    
+    @IBAction func personalizeRecommendations(sender: AnyObject) {
+        loginView.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+            loginView.frame = (frame: CGRect(x: 280, y: 10, width: 90, height: 30))
+
+            loginView.readPermissions = ["public_profile", "email", "user_friends"]
+            loginView.delegate = self
+        if (FBSDKAccessToken.currentAccessToken() != nil)
+                {
+                    self.returnUserData()
+                }
         
         movieSuggestionsTableView.contentInset = UIEdgeInsetsZero
         movieSuggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        movieSuggestionsTableView.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        
         
         // Do any additional setup after loading the view.
         var nib1 = UINib(nibName: "singleMovieCell", bundle: nil)
@@ -36,6 +49,84 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         println(suggestionsData)
     }
+    // Facebook Delegate Methods
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        println("User Logged In")
+        
+        
+        if ((error) != nil)
+        {
+            // Process error
+        }
+        else if result.isCancelled {
+            // Handle cancellations
+        }
+        else {
+            // If you ask for multiple permissions at once, you
+            // should check if specific permissions missing
+            if result.grantedPermissions.contains("email")
+            {
+                // Do work
+            }
+        }
+        self.returnUserData()
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        println("User Logged Out")
+        let loginManager = FBSDKLoginManager()
+        loginManager.logOut() // this is an instance function
+    }
+    
+    func returnUserData()
+    {
+        var params = [String:Int]()
+        params["limit"] = 200
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/movies", parameters: params)
+        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+            
+            if ((error) != nil)
+            {
+                // Process error
+                println("Error: \(error)")
+            }
+            else
+            {
+//                println("fetched user: \(result)")
+                self.FBUserMovies = result.valueForKey("data") as! NSArray
+                println(self.FBUserMovies[0])
+                self.tempMoviesData = self.suggestionsData.mutableCopy() as! NSMutableArray
+                for (index, suggestedMovie) in enumerate(self.tempMoviesData){
+                    let rowData: NSDictionary = suggestedMovie as! NSDictionary
+                    let suggestedMovieName = rowData ["original_title"] as! String
+                    for movie in self.FBUserMovies {
+                        let movieName = movie.valueForKey("name") as! String
+                        if(movieName==suggestedMovieName){
+                            self.tempMoviesData.removeObjectAtIndex(index)
+                           println(suggestedMovieName ," ", index)
+                            continue
+                        }
+                        
+                    }
+                    
+                }
+                self.suggestionsData = self.tempMoviesData
+                // Do any additional setup after loading the view.
+                var nib1 = UINib(nibName: "singleMovieCell", bundle: nil)
+                self.movieSuggestionsTableView.registerNib(nib1, forCellReuseIdentifier: "singleMovieCell")
+                
+                var nib2 = UINib(nibName: "doubleMovieCell", bundle: nil)
+                self.movieSuggestionsTableView.registerNib(nib2, forCellReuseIdentifier: "doubleMovieCell")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.movieSuggestionsTableView.reloadData()
+                })
+//                self.performSegueWithIdentifier("suggestionsViewSegue", sender: self)
+            }
+        })
+        
+    }
+    
 
 
     override func didReceiveMemoryWarning() {
@@ -130,11 +221,11 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         {
             var cell: DoubleMovieCellClass = self.movieSuggestionsTableView.dequeueReusableCellWithIdentifier("doubleMovieCell") as! DoubleMovieCellClass
             
+            
             var row = (indexPath.row * 2) - 2
             
             if let rowData: NSDictionary = self.suggestionsData[row] as? NSDictionary
             {
-                
                 let urlString = "http://image.tmdb.org/t/p/w342/" + (rowData["poster_path"]! as! String)
                 let imgURL = NSURL(string: urlString)
                 let temp = rowData["id"]!
@@ -168,7 +259,6 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
                             let image = UIImage(data: data)
                             // Store the image in to our cache
                             self.imageCache[urlString] = image
-                            // Update the cell Macintosh HD ▸ Users ▸ usmanamjed ▸ Desktop
                             dispatch_async(dispatch_get_main_queue(), {
                                 if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? DoubleMovieCellClass {
                                     cellToUpdate.leftMoviePoster.image = image
@@ -261,47 +351,26 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     // Corresponding to selection of cell
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+
         if ((indexPath.row == 0) || (indexPath.row == 1))
         {
             let selectedCell: SingleMovieCellClass = self.movieSuggestionsTableView.cellForRowAtIndexPath(indexPath) as! SingleMovieCellClass
             let movieId = selectedCell.movieId.text!
-            movieDetails = query.getMovieDetails("\(movieId)")
-            self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
+            println(movieId)
         }
+
         
     }
     
     // Function corresponding to left image tap gesture
     func TappedOnLeftImage(sender:UITapGestureRecognizer){
-        movieDetails = query.getMovieDetails("\((sender.view?.tag)!)")
-        self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
+        println((sender.view?.tag)!)
     }
     
     func TappedOnRightImage(sender:UITapGestureRecognizer){
-        movieDetails = query.getMovieDetails("\((sender.view?.tag)!)")
-        self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
+        println((sender.view?.tag)!)
     }
     
-    // Function to convert hexa code to UI Color
-    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
-    }
-    
-    
-    // Sending data of movies while segue happens for sugggestions
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "movieDetailsSegue"
-        {
-            if let destinationVC = segue.destinationViewController as? DetailsTabBarController {
-                destinationVC.data = movieDetails as Array
-            }
-            
-        }
-    }
     
     
     /*

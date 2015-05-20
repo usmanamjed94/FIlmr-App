@@ -19,6 +19,9 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     var myMutableSentence = NSMutableAttributedString()
     var attributesPositions = [String: [Int:Int]]()
     
+    var timer:NSTimer?
+    var myCounter = 0
+    
     var suggestions = [String]()
     var suggestionsDictionary = [String: Dictionary<Int, String>]()
     var query = QueryModel()
@@ -26,8 +29,6 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     final var genres = [String: Dictionary<Int, String>]()
     final var keywords = [String: Dictionary<Int, String>]()
     final var actors = [String: Dictionary<Int, String>]()
-    
-    
     
     // Initializing era's
     var era = ["1950's":[195001019591230: "Era"],"1960's":[196001019691230: "Era"],"1970's":[197001019791230: "Era"],"1980's":[198001019891230: "Era"],"1990's":[199001019991230: "Era"],"2000's":[200001020151230: "Era"]]
@@ -79,7 +80,6 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         sentence.textColor = UIColorFromHex(0xffffff, alpha: 1.0)
         sentence.font = UIFont.boldSystemFontOfSize(24.0)
         
-        // Autocomplete table properties
         
         autocompleteTableView.delegate = self
         autocompleteTableView.dataSource = self
@@ -90,12 +90,11 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         autocompleteTableView.separatorColor = UIColorFromHex(0xffffff, alpha: 1.0)
         autocompleteTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
-        // Get Recommendations button properties
         getRecommendations.backgroundColor = UIColorFromHex(0xffffff, alpha: 1.0)
         getRecommendations.layer.cornerRadius = 15
         getRecommendations.layer.borderWidth = 1
         getRecommendations.layer.borderColor = UIColorFromHex(0x191919, alpha: 1.0).CGColor
-    
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -368,6 +367,9 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         }
         return list
     }
+    
+    
+    
     
     
     // Function that builds the sentence
