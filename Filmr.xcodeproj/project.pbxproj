@@ -92,9 +92,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		042F894C1B0CA164003C4D53 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		99D717E61AF41F1000DF3D62 = {
 			isa = PBXGroup;
 			children = (
+				042F894C1B0CA164003C4D53 /* Resources */,
 				042F894B1B0C9E36003C4D53 /* Bridging-Header.h */,
 				99D717F11AF41F1100DF3D62 /* Filmr */,
 				99D718071AF41F1100DF3D62 /* FilmrTests */,
