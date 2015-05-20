@@ -70,6 +70,11 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         
     
         super.viewDidLoad()
+        var titleicon: UIImage!
+        titleicon = UIImage(named:"logo2-small")
+        let titleview = UIImageView(image:titleicon)
+        titleview.frame = (frame: CGRect(x: 140, y: 0, width: 3, height: 40))
+        self.navigationItem.titleView = titleview
         self.navigationItem.hidesBackButton = true;
         
         

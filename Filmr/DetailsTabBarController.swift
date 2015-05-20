@@ -14,6 +14,11 @@ class DetailsTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var titleicon: UIImage!
+        titleicon = UIImage(named:"logo2-small")
+        let titleview = UIImageView(image:titleicon)
+        titleview.frame = (frame: CGRect(x: 140, y: 0, width: 3, height: 40))
+        self.navigationItem.titleView = titleview
         println(data)
 
         // Do any additional setup after loading the view.
