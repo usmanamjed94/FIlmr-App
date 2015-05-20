@@ -32,7 +32,7 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
         {
             commentsTableView.hidden = true
             noReviewLabel = UILabel(frame: CGRectMake(0, 0, 300, 200))
-            noReviewLabel.center = CGPointMake(190, 300)
+            noReviewLabel.center = CGPointMake(210, 300)
             noReviewLabel.textAlignment = NSTextAlignment.Left
             noReviewLabel.text = "SORRY! NO REVIEWS OF THE SELECTED MOVIE COULD BE FOUND!"
             noReviewLabel.font = UIFont.boldSystemFontOfSize(26.0)
