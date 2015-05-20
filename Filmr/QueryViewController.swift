@@ -68,7 +68,9 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     
     override func viewDidLoad() {
         
+    
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = true;
         
         
         textField.delegate = self

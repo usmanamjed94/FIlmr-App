@@ -56,6 +56,9 @@ class WelcomeViewController: UIViewController {
         ////        welcomeSecondLabel.text = "Filmr!"
         //        welcomeSecondLabel.font = UIFont.boldSystemFontOfSize(48)
         //        welcomeSecondLabel.sizeToFit()
+        let titleview = UIImageView(image:welcomeSecondLabel)
+        titleview.frame = (frame: CGRect(x: 140, y: 0, width: 10, height: 20))
+        self.navigationItem.titleView = titleview
         var imageview1 = UIImageView(image: welcomeSecondLabel)
         imageview1.frame = (frame: CGRect(x: 270, y:80, width: 150, height: 140))
         //        imageview1.center = CGPoint (x: 200, y: 90)
