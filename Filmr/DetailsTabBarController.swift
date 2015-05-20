@@ -19,7 +19,20 @@ class DetailsTabBarController: UITabBarController {
         let titleview = UIImageView(image:titleicon)
         titleview.frame = (frame: CGRect(x: 140, y: 0, width: 3, height: 40))
         self.navigationItem.titleView = titleview
-        println(data)
+        
+        let dataDictionary: NSDictionary = (data[0] as? NSDictionary)!
+        
+        var reviews = dataDictionary["reviews"] as! NSDictionary
+        
+        // Passing desired data onto tab bar view controllers
+        let detailViewControllers = self.viewControllers
+
+        let overviewController = detailViewControllers![0] as! OverviewViewController
+        let reviewController = detailViewControllers![1] as! CommentsViewController
+        let similarController = detailViewControllers![2] as! SimilarViewController
+        
+        reviewController.reviewData = reviews
+        
 
         // Do any additional setup after loading the view.
     }
