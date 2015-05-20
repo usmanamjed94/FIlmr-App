@@ -116,5 +116,22 @@ class QueryModel {
         }
         return suggestionsDictionary
     }
+    
+    
+    // Function to search for movie details
+    func getMovieDetails (id: String) -> NSArray
+    {
+        let urlPath = "http://50.19.18.196:3000/getMovie?id=" + id
+        let url = NSURL(string: urlPath)
+        var request = NSURLRequest(URL: url!)
+        var response: NSURLResponse?
+        var error: NSErrorPointer = nil
+        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: error)
+        var jsonResult = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: error) as! NSDictionary
+        
+        let results: NSArray = jsonResult["results"] as! NSArray
+        return results
+        
+    }
 
 }

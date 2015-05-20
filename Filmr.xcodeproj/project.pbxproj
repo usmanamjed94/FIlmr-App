@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04E8616A1B091ABB00E3E835 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E861691B091ABB00E3E835 /* FBSDKCoreKit.framework */; };
-		04E8616E1B091F3300E3E835 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E8616C1B091F3300E3E835 /* Bolts.framework */; };
-		04E8616F1B091F3300E3E835 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E8616D1B091F3300E3E835 /* FBSDKLoginKit.framework */; };
 		9918902D1B074E3A001937B0 /* placeholder small.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9918902C1B074E3A001937B0 /* placeholder small.gif */; };
 		9918902F1B074E4C001937B0 /* placeholder wide.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9918902E1B074E4C001937B0 /* placeholder wide.gif */; };
 		9919CD451B0260B600AAEEA1 /* QueryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919CD441B0260B600AAEEA1 /* QueryModel.swift */; };
@@ -17,6 +14,10 @@
 		9935B5151B04C97B005343D9 /* SingleMovieCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9935B5141B04C97B005343D9 /* SingleMovieCellClass.swift */; };
 		997E02C51B0631D7006B7157 /* DoubleMovieCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997E02C41B0631D7006B7157 /* DoubleMovieCellClass.swift */; };
 		998A838B1B012AD70038F751 /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A838A1B012AD70038F751 /* SuggestionsViewController.swift */; };
+		99C90BB01B0BF5CE00940B17 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BAF1B0BF5CE00940B17 /* OverviewViewController.swift */; };
+		99C90BB21B0BF5FC00940B17 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BB11B0BF5FC00940B17 /* CommentsViewController.swift */; };
+		99C90BB41B0BF63100940B17 /* SimilarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BB31B0BF63100940B17 /* SimilarViewController.swift */; };
+		99C90BB61B0C5E1A00940B17 /* DetailsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BB51B0C5E1A00940B17 /* DetailsTabBarController.swift */; };
 		99D717F51AF41F1100DF3D62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D717F41AF41F1100DF3D62 /* AppDelegate.swift */; };
 		99D717F71AF41F1100DF3D62 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D717F61AF41F1100DF3D62 /* WelcomeViewController.swift */; };
 		99D717FA1AF41F1100DF3D62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99D717F81AF41F1100DF3D62 /* Main.storyboard */; };
@@ -38,10 +39,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		04E861691B091ABB00E3E835 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		04E8616B1B091AF800E3E835 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		04E8616C1B091F3300E3E835 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		04E8616D1B091F3300E3E835 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		9918902C1B074E3A001937B0 /* placeholder small.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "placeholder small.gif"; sourceTree = "<group>"; };
 		9918902E1B074E4C001937B0 /* placeholder wide.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "placeholder wide.gif"; sourceTree = "<group>"; };
 		9919CD441B0260B600AAEEA1 /* QueryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryModel.swift; sourceTree = "<group>"; };
@@ -49,6 +46,10 @@
 		9935B5141B04C97B005343D9 /* SingleMovieCellClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleMovieCellClass.swift; sourceTree = "<group>"; };
 		997E02C41B0631D7006B7157 /* DoubleMovieCellClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleMovieCellClass.swift; sourceTree = "<group>"; };
 		998A838A1B012AD70038F751 /* SuggestionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuggestionsViewController.swift; path = ../SuggestionsViewController.swift; sourceTree = "<group>"; };
+		99C90BAF1B0BF5CE00940B17 /* OverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
+		99C90BB11B0BF5FC00940B17 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
+		99C90BB31B0BF63100940B17 /* SimilarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarViewController.swift; sourceTree = "<group>"; };
+		99C90BB51B0C5E1A00940B17 /* DetailsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTabBarController.swift; sourceTree = "<group>"; };
 		99D717EF1AF41F1100DF3D62 /* Filmr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filmr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D717F31AF41F1100DF3D62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99D717F41AF41F1100DF3D62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,9 +69,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04E8616A1B091ABB00E3E835 /* FBSDKCoreKit.framework in Frameworks */,
-				04E8616E1B091F3300E3E835 /* Bolts.framework in Frameworks */,
-				04E8616F1B091F3300E3E835 /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,21 +82,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0451B05D1B0A788800F7B5A8 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		99D717E61AF41F1000DF3D62 = {
 			isa = PBXGroup;
 			children = (
-				0451B05D1B0A788800F7B5A8 /* Resources */,
-				04E8616C1B091F3300E3E835 /* Bolts.framework */,
-				04E8616D1B091F3300E3E835 /* FBSDKLoginKit.framework */,
-				04E8616B1B091AF800E3E835 /* Bridging-Header.h */,
-				04E861691B091ABB00E3E835 /* FBSDKCoreKit.framework */,
 				99D717F11AF41F1100DF3D62 /* Filmr */,
 				99D718071AF41F1100DF3D62 /* FilmrTests */,
 				99D717F01AF41F1100DF3D62 /* Products */,
@@ -118,8 +104,6 @@
 			isa = PBXGroup;
 			children = (
 				99E16FE51B07E5BE00022F3B /* QueryViewController.swift */,
-				9918902E1B074E4C001937B0 /* placeholder wide.gif */,
-				9918902C1B074E3A001937B0 /* placeholder small.gif */,
 				998A838A1B012AD70038F751 /* SuggestionsViewController.swift */,
 				99D717F41AF41F1100DF3D62 /* AppDelegate.swift */,
 				99D717F61AF41F1100DF3D62 /* WelcomeViewController.swift */,
@@ -132,6 +116,10 @@
 				997E02C41B0631D7006B7157 /* DoubleMovieCellClass.swift */,
 				9935B5141B04C97B005343D9 /* SingleMovieCellClass.swift */,
 				99E394FE1B04F9D9009D76AD /* doubleMovieCell.xib */,
+				99C90BAF1B0BF5CE00940B17 /* OverviewViewController.swift */,
+				99C90BB11B0BF5FC00940B17 /* CommentsViewController.swift */,
+				99C90BB31B0BF63100940B17 /* SimilarViewController.swift */,
+				99C90BB51B0C5E1A00940B17 /* DetailsTabBarController.swift */,
 			);
 			path = Filmr;
 			sourceTree = "<group>";
@@ -139,6 +127,8 @@
 		99D717F21AF41F1100DF3D62 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9918902E1B074E4C001937B0 /* placeholder wide.gif */,
+				9918902C1B074E3A001937B0 /* placeholder small.gif */,
 				99D717F31AF41F1100DF3D62 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -268,10 +258,14 @@
 				9919CD451B0260B600AAEEA1 /* QueryModel.swift in Sources */,
 				99E16FE61B07E5BE00022F3B /* QueryViewController.swift in Sources */,
 				998A838B1B012AD70038F751 /* SuggestionsViewController.swift in Sources */,
+				99C90BB61B0C5E1A00940B17 /* DetailsTabBarController.swift in Sources */,
 				997E02C51B0631D7006B7157 /* DoubleMovieCellClass.swift in Sources */,
 				99D717F71AF41F1100DF3D62 /* WelcomeViewController.swift in Sources */,
+				99C90BB01B0BF5CE00940B17 /* OverviewViewController.swift in Sources */,
+				99C90BB41B0BF63100940B17 /* SimilarViewController.swift in Sources */,
 				99D717F51AF41F1100DF3D62 /* AppDelegate.swift in Sources */,
 				9935B5151B04C97B005343D9 /* SingleMovieCellClass.swift in Sources */,
+				99C90BB21B0BF5FC00940B17 /* CommentsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,15 +394,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				INFOPLIST_FILE = Filmr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -416,15 +404,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				INFOPLIST_FILE = Filmr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
