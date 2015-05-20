@@ -259,7 +259,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
                             let image = UIImage(data: data)
                             // Store the image in to our cache
                             self.imageCache[urlString] = image
-                            // Update the cell
+                            // Update the cell hello
                             dispatch_async(dispatch_get_main_queue(), {
                                 if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? DoubleMovieCellClass {
                                     cellToUpdate.leftMoviePoster.image = image
