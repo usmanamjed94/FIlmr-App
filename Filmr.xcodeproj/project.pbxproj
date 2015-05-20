@@ -17,6 +17,7 @@
 		99C90BB01B0BF5CE00940B17 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BAF1B0BF5CE00940B17 /* OverviewViewController.swift */; };
 		99C90BB21B0BF5FC00940B17 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BB11B0BF5FC00940B17 /* CommentsViewController.swift */; };
 		99C90BB41B0BF63100940B17 /* SimilarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BB31B0BF63100940B17 /* SimilarViewController.swift */; };
+		99C90BB61B0C5E1A00940B17 /* DetailsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BB51B0C5E1A00940B17 /* DetailsTabBarController.swift */; };
 		99D717F51AF41F1100DF3D62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D717F41AF41F1100DF3D62 /* AppDelegate.swift */; };
 		99D717F71AF41F1100DF3D62 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D717F61AF41F1100DF3D62 /* WelcomeViewController.swift */; };
 		99D717FA1AF41F1100DF3D62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99D717F81AF41F1100DF3D62 /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 		99C90BAF1B0BF5CE00940B17 /* OverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
 		99C90BB11B0BF5FC00940B17 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		99C90BB31B0BF63100940B17 /* SimilarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarViewController.swift; sourceTree = "<group>"; };
+		99C90BB51B0C5E1A00940B17 /* DetailsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTabBarController.swift; sourceTree = "<group>"; };
 		99D717EF1AF41F1100DF3D62 /* Filmr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filmr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D717F31AF41F1100DF3D62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99D717F41AF41F1100DF3D62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				99C90BAF1B0BF5CE00940B17 /* OverviewViewController.swift */,
 				99C90BB11B0BF5FC00940B17 /* CommentsViewController.swift */,
 				99C90BB31B0BF63100940B17 /* SimilarViewController.swift */,
+				99C90BB51B0C5E1A00940B17 /* DetailsTabBarController.swift */,
 			);
 			path = Filmr;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				9919CD451B0260B600AAEEA1 /* QueryModel.swift in Sources */,
 				99E16FE61B07E5BE00022F3B /* QueryViewController.swift in Sources */,
 				998A838B1B012AD70038F751 /* SuggestionsViewController.swift in Sources */,
+				99C90BB61B0C5E1A00940B17 /* DetailsTabBarController.swift in Sources */,
 				997E02C51B0631D7006B7157 /* DoubleMovieCellClass.swift in Sources */,
 				99D717F71AF41F1100DF3D62 /* WelcomeViewController.swift in Sources */,
 				99C90BB01B0BF5CE00940B17 /* OverviewViewController.swift in Sources */,

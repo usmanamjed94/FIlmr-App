@@ -1,5 +1,5 @@
 //
-//  CommentsViewController.swift
+//  DetailsViewController.swift
 //  Filmr
 //
 //  Created by Usman Amjed on 5/20/15.
@@ -8,12 +8,13 @@
 
 import UIKit
 
-class CommentsViewController: UIViewController {
-
+class DetailsTabBarController: UITabBarController {
+    
     var data = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        println(data)
 
         // Do any additional setup after loading the view.
     }
@@ -24,6 +25,7 @@ class CommentsViewController: UIViewController {
     }
     
 
+    
     /*
     // MARK: - Navigation
 

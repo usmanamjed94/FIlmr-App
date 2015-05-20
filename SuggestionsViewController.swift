@@ -15,6 +15,8 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     var tableData = []
     var imageCache = [String:UIImage]()
     var query = QueryModel()
+    var movieDetails:NSArray = []
+    
     
     @IBOutlet weak var movieSuggestionsTableView: UITableView!
 
@@ -132,7 +134,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
             
             if let rowData: NSDictionary = self.suggestionsData[row] as? NSDictionary
             {
-                println(rowData["poster_path"]!)
+                
                 let urlString = "http://image.tmdb.org/t/p/w342/" + (rowData["poster_path"]! as! String)
                 let imgURL = NSURL(string: urlString)
                 let temp = rowData["id"]!
@@ -263,7 +265,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         {
             let selectedCell: SingleMovieCellClass = self.movieSuggestionsTableView.cellForRowAtIndexPath(indexPath) as! SingleMovieCellClass
             let movieId = selectedCell.movieId.text!
-            query.getMovieDetails("\(movieId)")
+            movieDetails = query.getMovieDetails("\(movieId)")
             self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
         }
         
@@ -271,12 +273,12 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     // Function corresponding to left image tap gesture
     func TappedOnLeftImage(sender:UITapGestureRecognizer){
-        println(query.getMovieDetails("\((sender.view?.tag)!)"))
+        movieDetails = query.getMovieDetails("\((sender.view?.tag)!)")
         self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
     }
     
     func TappedOnRightImage(sender:UITapGestureRecognizer){
-        query.getMovieDetails("\((sender.view?.tag)!)")
+        movieDetails = query.getMovieDetails("\((sender.view?.tag)!)")
         self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
     }
     
@@ -294,9 +296,10 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "movieDetailsSegue"
         {
-//            if let destinationVC = segue.destinationViewController as? SuggestionsViewController {
-//                destinationVC.suggestionsData = recommendations as Array
-//            }
+            if let destinationVC = segue.destinationViewController as? DetailsTabBarController {
+                destinationVC.data = movieDetails as Array
+            }
+            
         }
     }
     

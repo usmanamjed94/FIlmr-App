@@ -10,6 +10,7 @@ import UIKit
 
 class OverviewViewController: UIViewController {
 
+    var data = []
     override func viewDidLoad() {
         super.viewDidLoad()
 

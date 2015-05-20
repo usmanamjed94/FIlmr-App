@@ -10,6 +10,8 @@ import UIKit
 
 class SimilarViewController: UIViewController {
 
+    var data = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
