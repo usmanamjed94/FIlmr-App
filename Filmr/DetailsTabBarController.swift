@@ -21,6 +21,7 @@ class DetailsTabBarController: UITabBarController {
         self.navigationItem.titleView = titleview
         
         let dataDictionary: NSDictionary = (data[0] as? NSDictionary)!
+        println("Data: \(dataDictionary)")
         
         var reviews = dataDictionary["reviews"] as! NSDictionary
         

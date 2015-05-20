@@ -21,6 +21,7 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         reviewCount = reviewData["total_results"] as! Int
         
         
