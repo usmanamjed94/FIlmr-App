@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Usman Amjed. All rights reserved.
 //
 
-import UIKit
+//import UIKit
 
 class WelcomeViewController: UIViewController {
 
@@ -31,11 +31,11 @@ class WelcomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // Navigation bar color
-        self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x101010, alpha: 0.5)
+        self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x383838, alpha: 0.8)
         self.navigationController?.navigationBar.tintColor = UIColor.lightTextColor()
         
         // Main background
-        self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        self.view.backgroundColor = UIColorFromHex(0x262626, alpha: 1.0)
         
         
         
