@@ -105,7 +105,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         autocompleteTableView.scrollEnabled = true
         autocompleteTableView.hidden = true
         autocompleteTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "AutocompleteCell")
-        autocompleteTableView.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        autocompleteTableView.backgroundColor = UIColorFromHex(0x262626, alpha: 1.0)
         autocompleteTableView.separatorColor = UIColorFromHex(0xffffff, alpha: 1.0)
         autocompleteTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
