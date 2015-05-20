@@ -14,10 +14,11 @@ class DetailsTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //title icon code
         var titleicon: UIImage!
-        titleicon = UIImage(named:"logo2-small")
+        titleicon = UIImage(named:"logo1-small")
         let titleview = UIImageView(image:titleicon)
-        titleview.frame = (frame: CGRect(x: 140, y: 0, width: 3, height: 40))
+        titleview.frame = (frame: CGRect(x: 140, y: -20, width: 50, height: 40))
         self.navigationItem.titleView = titleview
         
         let dataDictionary: NSDictionary = (data[0] as? NSDictionary)!

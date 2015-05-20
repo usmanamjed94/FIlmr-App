@@ -18,6 +18,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     
     var myMutableSentence = NSMutableAttributedString()
     var attributesPositions = [String: [Int:Int]]()
+    var button = UIButton.buttonWithType(.Custom) as! UIButton
     
     var suggestions = [String]()
     var suggestionsDictionary = [String: Dictionary<Int, String>]()
@@ -117,11 +118,12 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         
         getRecommendations.hidden = true
         
-        var button = UIButton.buttonWithType(.Custom) as! UIButton
+        
         button.frame = CGRectMake(300, 310, 45, 45)
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
-        button.setImage(UIImage(named:"play"), forState: .Normal)
-        button.addTarget(self, action: "thumbsUpButtonPressed", forControlEvents: .TouchUpInside)
+        button.setImage(UIImage(named:"play2"), forState: .Normal)
+        button.addTarget(self, action: "thumbsUpButtonPressed", forControlEvents: .TouchDown)
+        button.addTarget(self, action: "thumbsUpButtonReleased", forControlEvents: .TouchUpInside)
         view.addSubview(button)
         
         
@@ -129,7 +131,17 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
     }
     func thumbsUpButtonPressed() {
         println("thumbs up button pressed")
+                button.setImage(UIImage(named:"play1"), forState: .Normal)
+        
+        
+
+    }
+    func thumbsUpButtonReleased() {
+        println("thumbs up button pressed")
+        button.setImage(UIImage(named:"play2"), forState: .Normal)
         getRecommendations.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+//        button.setImage(UIImage(named:"play1"), forState: .Normal)
+//        getRecommendations.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
