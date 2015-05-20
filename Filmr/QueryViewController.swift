@@ -45,6 +45,8 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         attributesPositions.removeAll(keepCapacity: false)
         
         sentence.text = "I WANT TO WATCH A MOVIE CONTAINING KEYWORD STARRING ACTOR FROM THE ERA INVOLVING GENRE?"
+        sentence.font = UIFont(name: "Avenir-Black",
+            size: 20.0)
         
         myMutableSentence = NSMutableAttributedString(string: sentence.text!)
         
@@ -70,18 +72,29 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         
     
         super.viewDidLoad()
-        var titleicon: UIImage!
-        titleicon = UIImage(named:"logo2-small")
-        let titleview = UIImageView(image:titleicon)
-        titleview.frame = (frame: CGRect(x: 140, y: 0, width: 3, height: 40))
-        self.navigationItem.titleView = titleview
-        self.navigationItem.hidesBackButton = true;
         
+        // Navigation bar color
+        self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x383838, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor.lightTextColor()
+        // Main background
+        self.view.backgroundColor = UIColorFromHex(0x262626, alpha: 1.0)
+        
+        //title icon code
+        var titleicon: UIImage!
+        titleicon = UIImage(named:"logo1-small")
+        let titleview = UIImageView(image:titleicon)
+        titleview.frame = (frame: CGRect(x: 140, y: -20, width: 50, height: 40))
+        self.navigationItem.titleView = titleview
+        
+        self.navigationItem.hidesBackButton = true;
+  
         
         textField.delegate = self
-        self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+
         
+        getRecommendations.backgroundColor = UIColor(red: 0.4, green: 1.0, blue: 0.2, alpha: 0.5)
         
+        sentence.textColor = UIColorFromHex(0x565454, alpha: 1.0)
         sentence.textColor = UIColorFromHex(0xffffff, alpha: 1.0)
         sentence.font = UIFont.boldSystemFontOfSize(24.0)
         
@@ -101,7 +114,22 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         getRecommendations.layer.cornerRadius = 15
         getRecommendations.layer.borderWidth = 1
         getRecommendations.layer.borderColor = UIColorFromHex(0x191919, alpha: 1.0).CGColor
+        
+        getRecommendations.hidden = true
+        
+        var button = UIButton.buttonWithType(.Custom) as! UIButton
+        button.frame = CGRectMake(300, 310, 45, 45)
+        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.setImage(UIImage(named:"play"), forState: .Normal)
+        button.addTarget(self, action: "thumbsUpButtonPressed", forControlEvents: .TouchUpInside)
+        view.addSubview(button)
+        
+        
     
+    }
+    func thumbsUpButtonPressed() {
+        println("thumbs up button pressed")
+        getRecommendations.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
     }
 
     override func didReceiveMemoryWarning() {

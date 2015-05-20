@@ -29,10 +29,17 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Navigation bar color
+        self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x383838, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor.lightTextColor()
+        // Main background
+        self.view.backgroundColor = UIColorFromHex(0x262626, alpha: 1.0)
+        
+        //title icon code
         var titleicon: UIImage!
-        titleicon = UIImage(named:"logo2-small")
+        titleicon = UIImage(named:"logo1-small")
         let titleview = UIImageView(image:titleicon)
-        titleview.frame = (frame: CGRect(x: 140, y: 0, width: 3, height: 40))
+        titleview.frame = (frame: CGRect(x: 140, y: -20, width: 50, height: 40))
         self.navigationItem.titleView = titleview
         
         loginView.frame = (frame: CGRect(x: 280, y: 10, width: 90, height: 30))
