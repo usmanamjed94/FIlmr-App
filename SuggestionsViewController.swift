@@ -9,23 +9,39 @@
 import UIKit
 import MediaPlayer
 
-class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate {
 
     var suggestionsData = []
     var tableData = []
     var imageCache = [String:UIImage]()
     var query = QueryModel()
     var movieDetails:NSArray = []
+    var tempMoviesData :NSMutableArray = []
+    var FBUserMovies: NSArray = []
     
     
     @IBOutlet weak var movieSuggestionsTableView: UITableView!
+    var loginView : FBSDKLoginButton = FBSDKLoginButton()
 
+    @IBAction func personalizeRecommendations(sender: AnyObject) {
+        loginView.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loginView.frame = (frame: CGRect(x: 280, y: 10, width: 90, height: 30))
+        
+        loginView.readPermissions = ["public_profile", "email", "user_friends"]
+        loginView.delegate = self
+        if (FBSDKAccessToken.currentAccessToken() != nil)
+        {
+            self.returnUserData()
+        }
+        
         movieSuggestionsTableView.contentInset = UIEdgeInsetsZero
         movieSuggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        movieSuggestionsTableView.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        
         
         // Do any additional setup after loading the view.
         var nib1 = UINib(nibName: "singleMovieCell", bundle: nil)
@@ -36,6 +52,84 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         println(suggestionsData)
     }
+    // Facebook Delegate Methods
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        println("User Logged In")
+        
+        
+        if ((error) != nil)
+        {
+            // Process error
+        }
+        else if result.isCancelled {
+            // Handle cancellations
+        }
+        else {
+            // If you ask for multiple permissions at once, you
+            // should check if specific permissions missing
+            if result.grantedPermissions.contains("email")
+            {
+                // Do work
+            }
+        }
+        self.returnUserData()
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        println("User Logged Out")
+        let loginManager = FBSDKLoginManager()
+        loginManager.logOut() // this is an instance function
+    }
+    
+    func returnUserData()
+    {
+        var params = [String:Int]()
+        params["limit"] = 200
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/movies", parameters: params)
+        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+            
+            if ((error) != nil)
+            {
+                // Process error
+                println("Error: \(error)")
+            }
+            else
+            {
+                //                println("fetched user: \(result)")
+                self.FBUserMovies = result.valueForKey("data") as! NSArray
+                println(self.FBUserMovies[0])
+                self.tempMoviesData = self.suggestionsData.mutableCopy() as! NSMutableArray
+                for (index, suggestedMovie) in enumerate(self.tempMoviesData){
+                    let rowData: NSDictionary = suggestedMovie as! NSDictionary
+                    let suggestedMovieName = rowData ["original_title"] as! String
+                    for movie in self.FBUserMovies {
+                        let movieName = movie.valueForKey("name") as! String
+                        if(movieName==suggestedMovieName){
+                            self.tempMoviesData.removeObjectAtIndex(index)
+                            println(suggestedMovieName ," ", index)
+                            continue
+                        }
+                        
+                    }
+                    
+                }
+                self.suggestionsData = self.tempMoviesData
+                // Do any additional setup after loading the view.
+                var nib1 = UINib(nibName: "singleMovieCell", bundle: nil)
+                self.movieSuggestionsTableView.registerNib(nib1, forCellReuseIdentifier: "singleMovieCell")
+                
+                var nib2 = UINib(nibName: "doubleMovieCell", bundle: nil)
+                self.movieSuggestionsTableView.registerNib(nib2, forCellReuseIdentifier: "doubleMovieCell")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.movieSuggestionsTableView.reloadData()
+                })
+                //                self.performSegueWithIdentifier("suggestionsViewSegue", sender: self)
+            }
+        })
+        
+    }
+    
 
 
     override func didReceiveMemoryWarning() {
