@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6874A30D-3D42-434C-8C51-4C6B7CE64822</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Filmr</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>99D2C152B6CB91B2B896491AE3CF01E30002DF5D</key>
+		<string>https://github.com/usmanamjed94/Filmr-App.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Filmr.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>99D2C152B6CB91B2B896491AE3CF01E30002DF5D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/usmanamjed94/Filmr-App.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>99D2C152B6CB91B2B896491AE3CF01E30002DF5D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>99D2C152B6CB91B2B896491AE3CF01E30002DF5D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Filmr-App</string>
+		</dict>
+	</array>
+</dict>
+</plist>
