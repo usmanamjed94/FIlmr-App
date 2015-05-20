@@ -74,6 +74,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         
         textField.delegate = self
         self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        self.navigationItem.hidesBackButton = true;
         sentence.textColor = UIColorFromHex(0x565454, alpha: 1.0)
         
         

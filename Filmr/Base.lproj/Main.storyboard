@@ -18,7 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="8hR-5L-GTO"/>
+                    <navigationItem key="navigationItem" id="8hR-5L-GTO">
+                        <connections>
+                            <outlet property="titleView" destination="8bC-Xf-vdC" id="2FY-EB-gAC"/>
+                        </connections>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <segue destination="7eN-go-qg4" kind="push" identifier="queryViewSegue" id="JWO-xL-8gN"/>
@@ -26,7 +30,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="482.66666666666669" y="29.346666666666668"/>
+            <point key="canvasLocation" x="550.5" y="20.5"/>
         </scene>
         <!--Query View Controller-->
         <scene sceneID="HtD-I2-Lhi">
@@ -125,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NCl-JC-3fJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1040.5" y="28.5"/>
+            <point key="canvasLocation" x="1020.5" y="-51.5"/>
         </scene>
         <!--Suggestions View Controller-->
         <scene sceneID="KXj-Jd-w86">
@@ -172,7 +176,11 @@
                             <constraint firstItem="KEW-vh-KQq" firstAttribute="top" secondItem="6mE-H8-PvE" secondAttribute="bottom" constant="-64" id="NHS-AI-nPY"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="UtX-Xh-e5Y"/>
+                    <navigationItem key="navigationItem" id="UtX-Xh-e5Y">
+                        <connections>
+                            <outlet property="titleView" destination="KEW-vh-KQq" id="l2J-EP-CTI"/>
+                        </connections>
+                    </navigationItem>
                     <value key="contentSizeForViewInPopover" type="size" width="375" height="640"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>

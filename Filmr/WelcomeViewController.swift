@@ -32,6 +32,8 @@ class WelcomeViewController: UIViewController {
         // Navigation bar color
         self.navigationController?.navigationBar.barTintColor = UIColorFromHex(0x101010, alpha: 0.5)
         self.navigationController?.navigationBar.tintColor = UIColor.lightTextColor()
+//        self.navigationController?.t
+
   
         // Main background
         self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
@@ -42,6 +44,8 @@ class WelcomeViewController: UIViewController {
 //        welcomeFirstLabel.text = "Welcome to"
 //        welcomeFirstLabel.font = UIFont.systemFontOfSize(36)
 //        welcomeFirstLabel.
+        
+        
         var imageview = UIImageView(image: welcomeFirstLabel)
         imageview.frame = (frame: CGRect(x: 140, y: 100, width: 150, height: 80))
 //        imageview.center = CGPoint (x: 150, y: 40)
@@ -55,6 +59,12 @@ class WelcomeViewController: UIViewController {
 ////        welcomeSecondLabel.text = "Filmr!"
 //        welcomeSecondLabel.font = UIFont.boldSystemFontOfSize(48)
 //        welcomeSecondLabel.sizeToFit()
+        let title = UIImage(named:"logo2")
+
+        var titleview = UIImageView(image: title)
+        titleview.bounds = (frame: CGRect(x: 140, y: 0, width: 100, height: 30))
+//        titleview.frame = (frame: CGRect(x: 140, y: 0, width: 1, height: 30))
+        self.navigationItem.titleView = titleview
         var imageview1 = UIImageView(image: welcomeSecondLabel)
         imageview1.frame = (frame: CGRect(x: 270, y:80, width: 150, height: 140))
 //        imageview1.center = CGPoint (x: 200, y: 90)
