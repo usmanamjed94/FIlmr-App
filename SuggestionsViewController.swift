@@ -53,7 +53,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         movieSuggestionsTableView.contentInset = UIEdgeInsetsZero
         movieSuggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.movieSuggestionsTableView.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        self.movieSuggestionsTableView.backgroundColor = UIColorFromHex(0x262626, alpha: 1.0)
         
         
         // Do any additional setup after loading the view.
@@ -109,7 +109,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
             else
             {
-                //                println("fetched user: \(result)")
+                // println("fetched user: \(result)")
                 self.FBUserMovies = result.valueForKey("data") as! NSArray
                 println(self.FBUserMovies[0])
                 self.tempMoviesData = self.suggestionsData.mutableCopy() as! NSMutableArray
@@ -357,7 +357,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
             
             return cell
         }
-        
+
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat

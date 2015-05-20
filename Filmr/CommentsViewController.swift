@@ -25,8 +25,8 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
         reviewCount = reviewData["total_results"] as! Int
         
         
-        self.view.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
-        self.commentsTableView.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
+        self.view.backgroundColor = UIColorFromHex(0x262626, alpha: 1.0)
+        self.commentsTableView.backgroundColor = UIColorFromHex(0x262626, alpha: 1.0)
         configureTableView()
         
         if (reviewCount! == 0)

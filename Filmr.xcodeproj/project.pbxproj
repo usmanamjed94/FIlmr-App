@@ -16,6 +16,17 @@
 		9935B5131B04C681005343D9 /* singleMovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9935B5121B04C681005343D9 /* singleMovieCell.xib */; };
 		9935B5151B04C97B005343D9 /* SingleMovieCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9935B5141B04C97B005343D9 /* SingleMovieCellClass.swift */; };
 		99682D4C1B0CD2B500E0F77C /* ReviewCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99682D4B1B0CD2B500E0F77C /* ReviewCellClass.swift */; };
+		99682D571B0D20A000E0F77C /* Stars-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D4D1B0D20A000E0F77C /* Stars-01.png */; };
+		99682D581B0D20A000E0F77C /* Stars-02.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D4E1B0D20A000E0F77C /* Stars-02.png */; };
+		99682D591B0D20A000E0F77C /* Stars-03.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D4F1B0D20A000E0F77C /* Stars-03.png */; };
+		99682D5A1B0D20A000E0F77C /* Stars-04.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D501B0D20A000E0F77C /* Stars-04.png */; };
+		99682D5B1B0D20A000E0F77C /* Stars-05.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D511B0D20A000E0F77C /* Stars-05.png */; };
+		99682D5C1B0D20A000E0F77C /* Stars-06.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D521B0D20A000E0F77C /* Stars-06.png */; };
+		99682D5D1B0D20A000E0F77C /* Stars-07.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D531B0D20A000E0F77C /* Stars-07.png */; };
+		99682D5E1B0D20A000E0F77C /* Stars-08.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D541B0D20A000E0F77C /* Stars-08.png */; };
+		99682D5F1B0D20A000E0F77C /* Stars-09.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D551B0D20A000E0F77C /* Stars-09.png */; };
+		99682D601B0D20A000E0F77C /* Stars-10.png in Resources */ = {isa = PBXBuildFile; fileRef = 99682D561B0D20A000E0F77C /* Stars-10.png */; };
+		99682D641B0D4D2300E0F77C /* UILabelPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99682D631B0D4D2300E0F77C /* UILabelPadding.swift */; };
 		997E02C51B0631D7006B7157 /* DoubleMovieCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997E02C41B0631D7006B7157 /* DoubleMovieCellClass.swift */; };
 		998A838B1B012AD70038F751 /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A838A1B012AD70038F751 /* SuggestionsViewController.swift */; };
 		99C90BB01B0BF5CE00940B17 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C90BAF1B0BF5CE00940B17 /* OverviewViewController.swift */; };
@@ -53,6 +64,17 @@
 		9935B5121B04C681005343D9 /* singleMovieCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = singleMovieCell.xib; sourceTree = "<group>"; };
 		9935B5141B04C97B005343D9 /* SingleMovieCellClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleMovieCellClass.swift; sourceTree = "<group>"; };
 		99682D4B1B0CD2B500E0F77C /* ReviewCellClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewCellClass.swift; sourceTree = "<group>"; };
+		99682D4D1B0D20A000E0F77C /* Stars-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-01.png"; sourceTree = "<group>"; };
+		99682D4E1B0D20A000E0F77C /* Stars-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-02.png"; sourceTree = "<group>"; };
+		99682D4F1B0D20A000E0F77C /* Stars-03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-03.png"; sourceTree = "<group>"; };
+		99682D501B0D20A000E0F77C /* Stars-04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-04.png"; sourceTree = "<group>"; };
+		99682D511B0D20A000E0F77C /* Stars-05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-05.png"; sourceTree = "<group>"; };
+		99682D521B0D20A000E0F77C /* Stars-06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-06.png"; sourceTree = "<group>"; };
+		99682D531B0D20A000E0F77C /* Stars-07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-07.png"; sourceTree = "<group>"; };
+		99682D541B0D20A000E0F77C /* Stars-08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-08.png"; sourceTree = "<group>"; };
+		99682D551B0D20A000E0F77C /* Stars-09.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-09.png"; sourceTree = "<group>"; };
+		99682D561B0D20A000E0F77C /* Stars-10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stars-10.png"; sourceTree = "<group>"; };
+		99682D631B0D4D2300E0F77C /* UILabelPadding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelPadding.swift; sourceTree = "<group>"; };
 		997E02C41B0631D7006B7157 /* DoubleMovieCellClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleMovieCellClass.swift; sourceTree = "<group>"; };
 		998A838A1B012AD70038F751 /* SuggestionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuggestionsViewController.swift; path = ../SuggestionsViewController.swift; sourceTree = "<group>"; };
 		99C90BAF1B0BF5CE00940B17 /* OverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +167,7 @@
 				99C90BB31B0BF63100940B17 /* SimilarViewController.swift */,
 				99C90BB51B0C5E1A00940B17 /* DetailsTabBarController.swift */,
 				99682D4B1B0CD2B500E0F77C /* ReviewCellClass.swift */,
+				99682D631B0D4D2300E0F77C /* UILabelPadding.swift */,
 			);
 			path = Filmr;
 			sourceTree = "<group>";
@@ -152,6 +175,16 @@
 		99D717F21AF41F1100DF3D62 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				99682D4D1B0D20A000E0F77C /* Stars-01.png */,
+				99682D4E1B0D20A000E0F77C /* Stars-02.png */,
+				99682D4F1B0D20A000E0F77C /* Stars-03.png */,
+				99682D501B0D20A000E0F77C /* Stars-04.png */,
+				99682D511B0D20A000E0F77C /* Stars-05.png */,
+				99682D521B0D20A000E0F77C /* Stars-06.png */,
+				99682D531B0D20A000E0F77C /* Stars-07.png */,
+				99682D541B0D20A000E0F77C /* Stars-08.png */,
+				99682D551B0D20A000E0F77C /* Stars-09.png */,
+				99682D561B0D20A000E0F77C /* Stars-10.png */,
 				9918902E1B074E4C001937B0 /* placeholder wide.gif */,
 				9918902C1B074E3A001937B0 /* placeholder small.gif */,
 				99D717F31AF41F1100DF3D62 /* Info.plist */,
@@ -258,10 +291,20 @@
 			files = (
 				99D717FA1AF41F1100DF3D62 /* Main.storyboard in Resources */,
 				99D717FF1AF41F1100DF3D62 /* LaunchScreen.xib in Resources */,
+				99682D5F1B0D20A000E0F77C /* Stars-09.png in Resources */,
+				99682D5E1B0D20A000E0F77C /* Stars-08.png in Resources */,
+				99682D5B1B0D20A000E0F77C /* Stars-05.png in Resources */,
+				99682D601B0D20A000E0F77C /* Stars-10.png in Resources */,
+				99682D591B0D20A000E0F77C /* Stars-03.png in Resources */,
+				99682D5D1B0D20A000E0F77C /* Stars-07.png in Resources */,
+				99682D581B0D20A000E0F77C /* Stars-02.png in Resources */,
+				99682D571B0D20A000E0F77C /* Stars-01.png in Resources */,
 				99E394FF1B04F9D9009D76AD /* doubleMovieCell.xib in Resources */,
+				99682D5A1B0D20A000E0F77C /* Stars-04.png in Resources */,
 				9918902D1B074E3A001937B0 /* placeholder small.gif in Resources */,
 				9918902F1B074E4C001937B0 /* placeholder wide.gif in Resources */,
 				9935B5131B04C681005343D9 /* singleMovieCell.xib in Resources */,
+				99682D5C1B0D20A000E0F77C /* Stars-06.png in Resources */,
 				99D717FC1AF41F1100DF3D62 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,6 +327,7 @@
 				9919CD451B0260B600AAEEA1 /* QueryModel.swift in Sources */,
 				99E16FE61B07E5BE00022F3B /* QueryViewController.swift in Sources */,
 				998A838B1B012AD70038F751 /* SuggestionsViewController.swift in Sources */,
+				99682D641B0D4D2300E0F77C /* UILabelPadding.swift in Sources */,
 				99C90BB61B0C5E1A00940B17 /* DetailsTabBarController.swift in Sources */,
 				997E02C51B0631D7006B7157 /* DoubleMovieCellClass.swift in Sources */,
 				99D717F71AF41F1100DF3D62 /* WelcomeViewController.swift in Sources */,
