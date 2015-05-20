@@ -60,7 +60,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
         myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: 67,length: 3))
         myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
         // Genre Coloring
-        myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: 81,length: 5))
+        myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x4c1242, alpha: 1.0), range: NSRange(location: 81,length: 5))
         myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
         
         sentence.attributedText = myMutableSentence
@@ -90,6 +90,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
   
         
         textField.delegate = self
+
         
         getRecommendations.backgroundColor = UIColor(red: 0.4, green: 1.0, blue: 0.2, alpha: 0.5)
         
@@ -562,7 +563,7 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
                 for (start,end) in details
                 {
                     // Genre Coloring
-                    myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: start,length: end))
+                    myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: UIColorFromHex(0x4c1242, alpha: 1.0), range: NSRange(location: start,length: end))
                     myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: start,length: end))
 
                 }

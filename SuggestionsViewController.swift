@@ -53,6 +53,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         movieSuggestionsTableView.contentInset = UIEdgeInsetsZero
         movieSuggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.movieSuggestionsTableView.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
         
         
         // Do any additional setup after loading the view.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rn4-Xk-4h2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rn4-Xk-4h2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -142,14 +142,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KEW-vh-KQq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KEW-vh-KQq">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="DFW-IF-rTt"/>
                                     <constraint firstAttribute="width" constant="375" id="Qdq-Ay-Uh6"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="504" id="YNl-LT-Yhy"/>
-                                    <constraint firstAttribute="height" constant="667" id="wA0-wq-x6A"/>
+                                    <constraint firstAttribute="height" constant="620" id="wA0-wq-x6A"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="VZ7-Hb-veb" id="TqR-8U-vb0"/>
@@ -184,7 +184,7 @@
             </objects>
             <point key="canvasLocation" x="1563.5" y="28.5"/>
         </scene>
-        <!--Item 2-->
+        <!--Reviews-->
         <scene sceneID="Pmi-8T-Zbm">
             <objects>
                 <viewController id="utv-Eh-0fH" customClass="CommentsViewController" customModule="Filmr" customModuleProvider="target" sceneMemberID="viewController">
@@ -195,9 +195,58 @@
                     <view key="view" contentMode="scaleToFill" id="50H-mK-8QN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="W3s-gV-H1F">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Review Cell" rowHeight="104" id="54m-sE-BNb" customClass="ReviewCellClass" customModule="Filmr" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="54m-sE-BNb" id="TkJ-Es-zAU">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Review" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ols-mX-90K">
+                                                    <rect key="frame" x="20" y="59" width="335" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" red="0.49803921580314636" green="0.49803921580314636" blue="0.49803921580314636" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wT4-Cm-ilX">
+                                                    <rect key="frame" x="20" y="20" width="335" height="29"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="wT4-Cm-ilX" firstAttribute="top" secondItem="TkJ-Es-zAU" secondAttribute="top" constant="20" id="IQA-cC-Pvu"/>
+                                                <constraint firstAttribute="trailing" secondItem="wT4-Cm-ilX" secondAttribute="trailing" constant="20" id="PFL-M4-zlS"/>
+                                                <constraint firstAttribute="bottom" secondItem="ols-mX-90K" secondAttribute="bottom" constant="20" id="Rci-WP-Bh0"/>
+                                                <constraint firstItem="ols-mX-90K" firstAttribute="top" secondItem="wT4-Cm-ilX" secondAttribute="bottom" constant="10" id="UIh-8l-9Ji"/>
+                                                <constraint firstItem="wT4-Cm-ilX" firstAttribute="leading" secondItem="TkJ-Es-zAU" secondAttribute="leading" constant="20" id="cb2-sG-87w"/>
+                                                <constraint firstAttribute="trailing" secondItem="ols-mX-90K" secondAttribute="trailing" constant="20" id="oDK-bU-sNQ"/>
+                                                <constraint firstItem="ols-mX-90K" firstAttribute="leading" secondItem="TkJ-Es-zAU" secondAttribute="leading" constant="20" id="z9N-7w-lr3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="reviewLabel" destination="ols-mX-90K" id="80b-5G-mGJ"/>
+                                            <outlet property="titleLabel" destination="wT4-Cm-ilX" id="ise-si-wZ9"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="utv-Eh-0fH" id="BW9-NK-bht"/>
+                                    <outlet property="delegate" destination="utv-Eh-0fH" id="FCr-tQ-J7i"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="NH9-Nq-WeG"/>
+                    <tabBarItem key="tabBarItem" title="Reviews" id="NH9-Nq-WeG"/>
+                    <connections>
+                        <outlet property="commentsTableView" destination="W3s-gV-H1F" id="esM-KX-Xhd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T1c-hp-GKf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -223,7 +272,7 @@
             </objects>
             <point key="canvasLocation" x="2563.5" y="846.5"/>
         </scene>
-        <!--Item 1-->
+        <!--Overview-->
         <scene sceneID="2Zg-S1-AdU">
             <objects>
                 <viewController id="0ns-d6-aup" customClass="OverviewViewController" customModule="Filmr" customModuleProvider="target" sceneMemberID="viewController">
@@ -236,7 +285,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="SIs-gg-Y3V"/>
+                    <tabBarItem key="tabBarItem" title="Overview" id="SIs-gg-Y3V"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TcD-2R-Hnn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
