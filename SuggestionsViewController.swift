@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate {
 
@@ -17,13 +18,15 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
 
     var tableData = []
     var imageCache = [String:UIImage]()
-    @IBOutlet weak var movieSuggestionsTableView: UITableView!
-
+    var query = QueryModel()
+    var movieDetails:NSArray = []
     
     @IBAction func personalizeRecommendations(sender: AnyObject) {
         loginView.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
     }
     
+    @IBOutlet weak var movieSuggestionsTableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,7 +41,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         movieSuggestionsTableView.contentInset = UIEdgeInsetsZero
         movieSuggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        
+        movieSuggestionsTableView.backgroundColor = UIColorFromHex(0x101010, alpha: 1.0)
         
         // Do any additional setup after loading the view.
         var nib1 = UINib(nibName: "singleMovieCell", bundle: nil)
@@ -221,11 +224,11 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         {
             var cell: DoubleMovieCellClass = self.movieSuggestionsTableView.dequeueReusableCellWithIdentifier("doubleMovieCell") as! DoubleMovieCellClass
             
-            
             var row = (indexPath.row * 2) - 2
             
             if let rowData: NSDictionary = self.suggestionsData[row] as? NSDictionary
             {
+                
                 let urlString = "http://image.tmdb.org/t/p/w342/" + (rowData["poster_path"]! as! String)
                 let imgURL = NSURL(string: urlString)
                 let temp = rowData["id"]!
@@ -357,7 +360,8 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         {
             let selectedCell: SingleMovieCellClass = self.movieSuggestionsTableView.cellForRowAtIndexPath(indexPath) as! SingleMovieCellClass
             let movieId = selectedCell.movieId.text!
-            println(movieId)
+            movieDetails = query.getMovieDetails("\(movieId)")
+            self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
         }
 
         
@@ -365,13 +369,35 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     // Function corresponding to left image tap gesture
     func TappedOnLeftImage(sender:UITapGestureRecognizer){
-        println((sender.view?.tag)!)
+        movieDetails = query.getMovieDetails("\((sender.view?.tag)!)")
+        self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
     }
     
     func TappedOnRightImage(sender:UITapGestureRecognizer){
-        println((sender.view?.tag)!)
+        movieDetails = query.getMovieDetails("\((sender.view?.tag)!)")
+        self.performSegueWithIdentifier("movieDetailsSegue", sender: self)
     }
     
+    // Function to convert hexa code to UI Color
+    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+    }
+    
+    
+    // Sending data of movies while segue happens for sugggestions
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "movieDetailsSegue"
+        {
+            if let destinationVC = segue.destinationViewController as? DetailsTabBarController {
+                destinationVC.data = movieDetails as Array
+            }
+            
+        }
+    }
     
     
     /*
