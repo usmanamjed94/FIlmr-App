@@ -267,7 +267,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2dJ-NA-0lT">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="375" id="DkJ-4W-G8i"/>
@@ -282,18 +282,19 @@
                         <constraints>
                             <constraint firstItem="2dJ-NA-0lT" firstAttribute="leading" secondItem="fYz-GG-Uj6" secondAttribute="leadingMargin" constant="-16" id="799-v0-fhs"/>
                             <constraint firstItem="2dJ-NA-0lT" firstAttribute="bottom" secondItem="dpT-5y-BqA" secondAttribute="top" id="9OW-cw-HMe"/>
-                            <constraint firstItem="2dJ-NA-0lT" firstAttribute="top" secondItem="ddf-uR-1Ft" secondAttribute="bottom" id="YAg-Hx-I6q"/>
+                            <constraint firstItem="2dJ-NA-0lT" firstAttribute="top" secondItem="ddf-uR-1Ft" secondAttribute="bottom" constant="-64" id="YAg-Hx-I6q"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Similar" id="pmP-tS-FtI"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="suggestionsTable" destination="2dJ-NA-0lT" id="6mU-3j-B3z"/>
+                        <segue destination="f0X-9v-wEd" kind="push" identifier="similarMovieDetailSegue" id="t3F-Qb-ZIt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4DA-aV-Dyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2563.5" y="846.5"/>
+            <point key="canvasLocation" x="1601.5" y="887.5"/>
         </scene>
         <!--Overview-->
         <scene sceneID="2Zg-S1-AdU">
@@ -433,4 +434,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="t3F-Qb-ZIt"/>
+    </inferredMetricsTieBreakers>
 </document>

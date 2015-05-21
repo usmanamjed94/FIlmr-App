@@ -14,6 +14,7 @@ class SimilarViewController: UIViewController, UITableViewDelegate, UITableViewD
     var suggestionsData = NSArray()
     var imageCache = [String:UIImage]()
     var query = QueryModel()
+    var movieDetails:NSArray = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +97,18 @@ class SimilarViewController: UIViewController, UITableViewDelegate, UITableViewD
         return 300
     }
     
+    // Corresponding to selection of cell
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let selectedCell: SingleMovieCellClass = self.suggestionsTable.cellForRowAtIndexPath(indexPath) as! SingleMovieCellClass
+        let movieId = selectedCell.movieId.text!
+        
+        movieDetails = query.getMovieDetails("\(movieId)")
+        self.performSegueWithIdentifier("similarMovieDetailSegue", sender: self)
+        
+    }
+
+    
     // Function to convert hexa code to UI Color
     func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
@@ -104,6 +117,19 @@ class SimilarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
+    
+    // Sending data of movies while segue happens for sugggestions
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "similarMovieDetailSegue"
+        {
+            if let destinationVC = segue.destinationViewController as? DetailsTabBarController {
+                destinationVC.data = movieDetails as Array
+            }
+            
+        }
+    }
+
+    
     /*
     // MARK: - Navigation
 
