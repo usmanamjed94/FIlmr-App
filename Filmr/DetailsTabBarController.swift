@@ -25,6 +25,9 @@ class DetailsTabBarController: UITabBarController {
         //println("Data: \(dataDictionary)")
         
         var reviews = dataDictionary["reviews"] as! NSDictionary
+        var similar = dataDictionary["similar"] as! NSDictionary
+        var similarArray = similar["results"] as! NSArray
+        
         
         // Passing desired data onto tab bar view controllers
         let detailViewControllers = self.viewControllers
@@ -33,9 +36,11 @@ class DetailsTabBarController: UITabBarController {
         let reviewController = detailViewControllers![1] as! CommentsViewController
         let similarController = detailViewControllers![2] as! SimilarViewController
         
+        
         reviewController.reviewData = reviews
         overviewController.dataDictionary = dataDictionary
-
+        similarController.suggestionsData = similarArray
+        
         // Do any additional setup after loading the view.
     }
 

@@ -265,10 +265,31 @@
                     <view key="view" contentMode="scaleToFill" id="fYz-GG-Uj6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2dJ-NA-0lT">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="DkJ-4W-G8i"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="mRk-qu-y3i" id="rRc-FC-81f"/>
+                                    <outlet property="delegate" destination="mRk-qu-y3i" id="Of5-Zg-OZl"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2dJ-NA-0lT" firstAttribute="leading" secondItem="fYz-GG-Uj6" secondAttribute="leadingMargin" constant="-16" id="799-v0-fhs"/>
+                            <constraint firstItem="2dJ-NA-0lT" firstAttribute="bottom" secondItem="dpT-5y-BqA" secondAttribute="top" id="9OW-cw-HMe"/>
+                            <constraint firstItem="2dJ-NA-0lT" firstAttribute="top" secondItem="ddf-uR-1Ft" secondAttribute="bottom" id="YAg-Hx-I6q"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Similar" id="pmP-tS-FtI"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="suggestionsTable" destination="2dJ-NA-0lT" id="6mU-3j-B3z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4DA-aV-Dyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -364,7 +385,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TcD-2R-Hnn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2674.5" y="-888"/>
+            <point key="canvasLocation" x="2580.5" y="-1200"/>
         </scene>
         <!--Details Tab Bar Controller-->
         <scene sceneID="d5a-L2-Zpf">
