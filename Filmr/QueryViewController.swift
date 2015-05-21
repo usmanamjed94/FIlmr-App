@@ -264,6 +264,32 @@ class QueryViewController: UIViewController, UITextFieldDelegate, UITableViewDel
                     alert.message = "We couldn't find any recommendations for you."
                     alert.addButtonWithTitle("Take me back!")
                     alert.show()
+                    
+                    self.recommendations = []
+                    self.constraintsDictionary.removeAll(keepCapacity: false)
+                    self.suggestionsDictionary.removeAll(keepCapacity: false)
+                    self.attributesPositions.removeAll(keepCapacity: false)
+                    
+                    self.sentence.text = "I WANT TO WATCH A MOVIE CONTAINING KEYWORD STARRING ACTOR FROM THE ERA INVOLVING GENRE?"
+                    self.sentence.font = UIFont(name: "Avenir-Black",
+                        size: 20.0)
+                    
+                    self.myMutableSentence = NSMutableAttributedString(string: self.sentence.text!)
+                    
+                    // Keyword Coloring
+                    self.myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: self.UIColorFromHex(0xdd7625, alpha: 1.0), range: NSRange(location: 35,length: 7))
+                    self.myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: self.UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
+                    // Actor Coloring
+                    self.myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: self.UIColorFromHex(0xcf2424, alpha: 1.0), range: NSRange(location: 52,length: 5))
+                    self.myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: self.UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
+                    // ERA Coloring
+                    self.myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: self.UIColorFromHex(0x8d1a33, alpha: 1.0), range: NSRange(location: 67,length: 3))
+                    self.myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: self.UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
+                    // Genre Coloring
+                    self.myMutableSentence.addAttribute(NSBackgroundColorAttributeName, value: self.UIColorFromHex(0x4c1242, alpha: 1.0), range: NSRange(location: 81,length: 5))
+                    self.myMutableSentence.addAttribute(NSForegroundColorAttributeName, value: self.UIColorFromHex(0xffffff, alpha: 1.0), range: NSRange(location: 35,length: 7))
+                    
+                    self.sentence.attributedText = self.myMutableSentence
                 }
                 // Stopping the activity indicator and removing the subview
                 self.hideActivityIndicator(subView.container, indicator: subView.indicator)
