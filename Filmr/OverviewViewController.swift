@@ -15,16 +15,32 @@ class OverviewViewController: UIViewController {
     @IBOutlet weak var ratings: UIImageView!
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var genre: UILabel!
+    @IBOutlet weak var keywordsLabel: UILabel!
+    @IBOutlet weak var keywords: UILabel!
+    @IBOutlet weak var overviewLabel: UILabel!
+    @IBOutlet weak var overview: UILabel!
     
     var dataDictionary: NSDictionary = NSDictionary()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let collection = dataDictionary["belongs_to_collection"] as! NSDictionary
+        self.view.backgroundColor = UIColorFromHex(0x262626, alpha: 1.0)
+        
+        var posterPath = ""
+        
+        if let collection = dataDictionary["belongs_to_collection"] as? NSDictionary
+        {
+            posterPath = (collection["poster_path"] as! String)
+        }
+        
+        else
+        {
+            posterPath = (dataDictionary["poster_path"] as! String)
+        }
         
         // Loading movie image
-        let urlString = "http://image.tmdb.org/t/p/w500/" + (collection["poster_path"] as! String)
+        let urlString = "http://image.tmdb.org/t/p/w500/" + posterPath
         let imgURL = NSURL(string: urlString)
         // Start by setting the cell's image to a static file
         movieImage.image = UIImage(named: "placeholderWide.gif")
@@ -75,6 +91,8 @@ class OverviewViewController: UIViewController {
             ratings.image = UIImage(named: "Stars-05.png")
             
         }
+        ratingLabel.font = UIFont(name: "Avenir-Black", size: 26.0)
+        ratingLabel.textColor = UIColorFromHex(0x97999d, alpha: 1.0)
         
         // Loading genres
         let genresArray = dataDictionary["genres"] as! NSArray
@@ -95,7 +113,47 @@ class OverviewViewController: UIViewController {
         
         genre.backgroundColor = UIColorFromHex(0x4c1242, alpha: 1.0)
         genre.textColor = UIColorFromHex(0xffffff, alpha: 1.0)
-        println()
+        genreLabel.font = UIFont(name: "Avenir-Black", size: 26.0)
+        genreLabel.textColor = UIColorFromHex(0x97999d, alpha: 1.0)
+        
+        // Adding keywords
+        let keywordsDictionary = dataDictionary["keywords"] as! NSDictionary
+        var keywordsArray = NSArray()
+        var first = true
+        for (id,details) in keywordsDictionary
+        {
+            keywordsArray = details as! NSArray
+
+        }
+        
+        for (var i=0; i < keywordsArray.count; i++)
+        {
+            let keywordDictionary = keywordsArray[i] as! NSDictionary
+            let name = keywordDictionary["name"]!
+            if (i==0)
+            {
+                keywords.text! = ("\(name)")
+            }
+                
+            else
+            {
+                keywords.text! += " , " + "\(name)"
+            }
+        }
+    
+        keywords.backgroundColor = UIColorFromHex(0xdd7625, alpha: 1.0)
+        keywords.textColor = UIColorFromHex(0xffffff, alpha: 1.0)
+        keywordsLabel.font = UIFont(name: "Avenir-Black", size: 26.0)
+        keywordsLabel.textColor = UIColorFromHex(0x97999d, alpha: 1.0)
+        
+        
+        // Adding overview
+        overview.text = dataDictionary["overview"] as! String
+        overview.backgroundColor = UIColorFromHex(0x8d1a33, alpha: 1.0)
+        overview.textColor = UIColorFromHex(0xffffff, alpha: 1.0)
+        overviewLabel.font = UIFont(name: "Avenir-Black", size: 26.0)
+        overviewLabel.textColor = UIColorFromHex(0x97999d, alpha: 1.0)
+        
         // Do any additional setup after loading the view.
     }
     
